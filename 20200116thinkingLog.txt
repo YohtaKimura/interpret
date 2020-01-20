@@ -1,0 +1,35 @@
+20200116 JavaTraining ThreadPool
+
+コメントを駆使して修正した方が良さそう．
+
+まずはテストをチェック
+多くの場合で countOks(invokers) は 4 だと言われている……．expected は 1．
+invokers　の volatile フィールドが true になってしまっているのが原因？
+どこで true になっているのかを調べたい．l. 148．
+
+参考に別フォルダーに移動させつつ，1 からやる．
+要は constructor start stop dispatch を実装する．
+constructor 実装でどういうデータを所持させるか決めたい．
+Github の他の人の実装を参考にすると
+
+# データ構造
+- 生成の方法（これは標準ライブラリを使用する）
+- int poolsize
+- Que 状のデータで Thread を入れておく？こいつが pool.Thread は Runnable を imple してるので，型パラメータは Runnable.
+Que インターフェースで実装は LinkedList を使うか．
+
+queuSize と numberOfThreads の大きさが違うのは何故？
+スレッドは全て queu に収まるようにしないといけないから numberOfThreads > queuSize なら IllegalArg じゃね？
+
+# start
+Que の中の一つを使う．
+それが Assert(1 as expected, actual X) の理由かな．
+
+
+
+poll したあと，start して，スレッドが終了したらどうやって queue に戻すのか分からん……．
+
+---------------
+20200120
+
+Java 研修ノートの柴田さんのアドバイスと近藤さんのアドバイスを見ながら取り組むべき．
