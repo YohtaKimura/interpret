@@ -1,12 +1,13 @@
 package interpret;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.Optional;
 
 public class CreateObject {
-    void createInstanceByNoArgument(final String name) {
+    Optional<Object> createInstanceByNoArgument(final String name) {
         try {
             Class type = Class.forName(name);
-            Object o = type.getConstructor().newInstance();
+            return Optional.of(type.getConstructor().newInstance());
 
         } catch(final ClassNotFoundException | NoSuchMethodException e) {
             System.err.println(e);
@@ -17,5 +18,6 @@ public class CreateObject {
         } catch (InvocationTargetException e) {
             e.printStackTrace();
         }
+        return Optional.empty();
     }
 }

@@ -4,13 +4,15 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Optional;
 
 public class TextFrame extends JFrame {
+    private JTextField textField;
     public TextFrame() {
         setTitle("Text");
         setSize(300, 120);
 
-        final JTextField textField = new JTextField();
+        textField = new JTextField();
         final JButton button = new JButton("OK");
 
         button.addActionListener(new ActionListener() {
@@ -21,6 +23,9 @@ public class TextFrame extends JFrame {
                 JOptionPane.showMessageDialog(
                         null,
                         textField.getText() + " is what you input.");
+                CreateObject object = new CreateObject();
+                Optional<Object> o = object.createInstanceByNoArgument(textField.getText());
+                printToDialog(o.orElse(null));
             }
         });
 
@@ -31,5 +36,15 @@ public class TextFrame extends JFrame {
         panel.add(button);
 
         add(panel, BorderLayout.NORTH);
+    }
+
+    String getText() {
+        return textField.getText();
+    }
+
+    void printToDialog(Object object) {
+        JOptionPane.showMessageDialog(
+                null,
+                object.toString());
     }
 }
