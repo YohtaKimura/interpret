@@ -1,5 +1,5 @@
 package interpret;
 
-public class ForTest {
+public class ForTestProduct {
     public static String test = "test";
 }
