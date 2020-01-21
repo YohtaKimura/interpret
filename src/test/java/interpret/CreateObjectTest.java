@@ -11,4 +11,13 @@ public class CreateObjectTest {
         String toStringOfObject = object.toString();
         Assert.assertTrue(toStringOfObject.contains("java.lang.Object"));
     }
+
+    @Test
+    public void testCreateInstanceByNoArgumentWithMyClass() throws Exception {
+        CreateObject createObject = new CreateObject();
+        Object object = createObject.createInstanceByNoArgument("interpret.ForTest");
+        String toStringOfObject = object.toString();
+        System.out.println(toStringOfObject);
+        Assert.assertTrue(toStringOfObject.contains("interpret.ForTest"));
+    }
 }
