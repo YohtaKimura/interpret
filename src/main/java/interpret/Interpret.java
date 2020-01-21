@@ -1,10 +1,19 @@
 package interpret;
 
 import javax.swing.*;
+import java.awt.*;
 
 public class Interpret {
     public static void main(String[] args) {
-        JFrame frame = new JFrame("title");
-        frame.setVisible(true);
+        EventQueue.invokeLater(
+                new Runnable() {
+                    @Override
+                    public void run() {
+                        TextFrame frame = new TextFrame();
+                        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                        frame.setVisible(true);
+                    }
+                }
+        );
     }
 }
