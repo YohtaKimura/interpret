@@ -23,8 +23,8 @@ public class TextFrame extends JFrame {
                 JOptionPane.showMessageDialog(
                         null,
                         textField.getText() + " is what you input.");
-                CreateObject object = new CreateObject();
-                Optional<Object> o = object.createInstanceByNoArgument(textField.getText());
+                ObjectCreator objectCreator = new ObjectCreator();
+                Optional<Object> o = objectCreator.createInstanceByNoArgument(textField.getText());
                 printToDialog(o.orElse(null));
             }
         });

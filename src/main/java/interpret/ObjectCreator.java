@@ -3,7 +3,7 @@ package interpret;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Optional;
 
-public class CreateObject {
+public class ObjectCreator {
     Optional<Object> createInstanceByNoArgument(final String name) {
         try {
             Class type = Class.forName(name);
