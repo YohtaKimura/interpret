@@ -12,9 +12,9 @@ public class ObjectManagerDialog extends JDialog implements Runnable{
         this.owner = owner;
         this.panel = panel;
 		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		this.setTitle("Hello");
+		this.setTitle("Object manager");
 		this.setContentPane(panel);
-		panel.setPreferredSize(new Dimension(25, 25));
+		panel.setPreferredSize(new Dimension(300, 300));
 		this.pack();
 		this.setVisible(true);
 	}

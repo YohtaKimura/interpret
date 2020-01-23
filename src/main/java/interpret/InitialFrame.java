@@ -23,8 +23,8 @@ public class InitialFrame implements ActionListener {
         viewMenu.setShortcut(new MenuShortcut('V'));
         menuBar.add(viewMenu);
 
-        // [Utils] -> [Open objects manager]
-        propertiesMenu = new MenuItem("Open objects manager...", new MenuShortcut('P'));
+        // [Utils] -> [Open object manager]
+        propertiesMenu = new MenuItem("Open object manager...", new MenuShortcut('P'));
         propertiesMenu.addActionListener(this); // need extract to other class and extends Frame implements ActionListener
         viewMenu.add(propertiesMenu);
     }
