@@ -7,10 +7,11 @@ import java.awt.event.ActionListener;
 
 public class InitialFrame implements ActionListener {
     private static MenuItem propertiesMenu;
-    private static Canvas canvas;
+    private static JPanel panel = new JPanel();
+    private JFrame frame;
 
     public InitialFrame(){
-        TextFrame frame = new TextFrame();
+        frame = new TextFrame();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
 
@@ -30,9 +31,6 @@ public class InitialFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-                Object source = e.getSource();
-        if (source.equals(propertiesMenu)) {
-            // new ObjectManagerDialog(this, canvas);
-        }
+        new ObjectManagerDialog(this.frame, panel);
     };
 }
