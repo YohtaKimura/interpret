@@ -11,6 +11,7 @@ public class Interpret {
                 new Runnable() {
                     @Override
                     public void run() {
+                        // TODO: extract to another class
                         TextFrame frame = new TextFrame();
                         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                         frame.setVisible(true);
