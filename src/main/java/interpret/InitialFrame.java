@@ -7,8 +7,8 @@ import java.awt.event.ActionListener;
 
 public class InitialFrame implements ActionListener {
     private static MenuItem propertiesMenu;
-    private static JPanel panel = new JPanel();
-    private JFrame frame;
+    private static final JPanel panel = new JPanel();
+    private final JFrame frame;
     private final ObjectManager objectManager;
 
     public InitialFrame(final ObjectManager objectManager){
@@ -33,6 +33,6 @@ public class InitialFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        new ObjectManagerDialog(this.objectManager, this.frame, panel);
+        new ObjectManagerDialog(this.objectManager, this.frame, this.panel);
     };
 }

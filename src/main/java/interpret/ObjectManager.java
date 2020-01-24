@@ -19,7 +19,12 @@ public class ObjectManager {
         objectStore.put(name, o);
     }
 
-    Optional getObjectByName(final String name) {
+    Optional<Object> getObjectByName(final String name) {
         return objectStore.get(name);
+    }
+
+    Optional<String> getNameByName(final String name) {
+        if (objectStore.containsKey(name)) return Optional.of(name);
+        return Optional.empty();
     }
 }

@@ -17,7 +17,7 @@ public class ObjectManagerDialog extends JDialog implements Runnable, ActionList
         this.panel = panel;
         this.objectManager = objectManager;
 
-        JButton btn = new JButton("ForTestProduct");
+        JButton btn = new JButton(objectManager.getNameByName("interpret.ForTestProduct").get());
         btn.addActionListener(this);
 
 		panel.setPreferredSize(new Dimension(300, 300));
