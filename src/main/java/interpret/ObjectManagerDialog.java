@@ -4,17 +4,20 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Optional;
 
 public class ObjectManagerDialog extends JDialog implements Runnable, ActionListener {
     private final JFrame owner;
     private final JPanel panel;
+    private final ObjectManager objectManager;
 
-    public ObjectManagerDialog(JFrame owner, JPanel panel){
+    public ObjectManagerDialog(ObjectManager objectManager, JFrame owner, JPanel panel){
         super(owner);
         this.owner = owner;
         this.panel = panel;
+        this.objectManager = objectManager;
 
-        JButton btn = new JButton("Button");
+        JButton btn = new JButton("ForTestProduct");
         btn.addActionListener(this);
 
 		panel.setPreferredSize(new Dimension(300, 300));
@@ -40,6 +43,7 @@ public class ObjectManagerDialog extends JDialog implements Runnable, ActionList
     @Override
     public void actionPerformed(ActionEvent e) {
         // TODO: Use some ObjectManager's method
-        System.out.println("Field");
+        ForTestProduct o = (ForTestProduct) objectManager.getObjectByName("interpret.ForTestProduct").get();
+        System.out.println(o.test);
     }
 }

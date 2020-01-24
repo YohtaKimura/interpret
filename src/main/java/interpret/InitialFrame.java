@@ -9,8 +9,10 @@ public class InitialFrame implements ActionListener {
     private static MenuItem propertiesMenu;
     private static JPanel panel = new JPanel();
     private JFrame frame;
+    private final ObjectManager objectManager;
 
     public InitialFrame(final ObjectManager objectManager){
+        this.objectManager = objectManager;
         frame = new TextFrame(objectManager);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
@@ -31,6 +33,6 @@ public class InitialFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        new ObjectManagerDialog(this.frame, panel);
+        new ObjectManagerDialog(this.objectManager, this.frame, panel);
     };
 }

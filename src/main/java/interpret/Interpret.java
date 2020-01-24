@@ -10,8 +10,8 @@ public class Interpret {
                 new Runnable() {
                     @Override
                     public void run() {
-                        ObjectManager objectManager = new ObjectManager();
-                        InitialFrame initialFrame = new InitialFrame(objectManager);
+                        final ObjectManager objectManager = new ObjectManager();
+                        final InitialFrame initialFrame = new InitialFrame(objectManager);
                     }
                 }
         );
