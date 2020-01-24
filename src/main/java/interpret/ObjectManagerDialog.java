@@ -39,7 +39,7 @@ public class ObjectManagerDialog extends JDialog implements Runnable, ActionList
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        // TODO: implements some
+        // TODO: Use some ObjectManager's method
         System.out.println("Field");
     }
 }

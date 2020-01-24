@@ -8,7 +8,7 @@ import java.util.Optional;
 
 public class TextFrame extends JFrame {
     private JTextField textField;
-    public TextFrame() {
+    public TextFrame(final ObjectManager objectManager) {
         setTitle("Text");
         setSize(300, 120);
 
@@ -24,7 +24,8 @@ public class TextFrame extends JFrame {
                         null,
                         textField.getText() + " is what you input.");
                 ObjectCreator objectCreator = new ObjectCreator();
-                Optional<Object> o = objectCreator.createInstanceByNoArgument(textField.getText());
+                objectManager.createAndSave(textField.getText());
+                Optional o = objectManager.getObjectByName(textField.getText());
                 printToDialog(o.orElse(null));
             }
         });

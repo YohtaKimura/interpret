@@ -10,8 +10,8 @@ public class InitialFrame implements ActionListener {
     private static JPanel panel = new JPanel();
     private JFrame frame;
 
-    public InitialFrame(){
-        frame = new TextFrame();
+    public InitialFrame(final ObjectManager objectManager){
+        frame = new TextFrame(objectManager);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
 
