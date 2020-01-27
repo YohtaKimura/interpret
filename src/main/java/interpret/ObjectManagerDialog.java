@@ -10,6 +10,7 @@ public class ObjectManagerDialog extends JDialog implements Runnable, ActionList
     private final JFrame owner;
     private final JPanel panel;
     private final ObjectManager objectManager;
+    private String objectName;
 
     public ObjectManagerDialog(ObjectManager objectManager, JFrame owner, JPanel panel){
         super(owner);
@@ -17,7 +18,8 @@ public class ObjectManagerDialog extends JDialog implements Runnable, ActionList
         this.panel = panel;
         this.objectManager = objectManager;
 
-        JButton btn = new JButton(objectManager.getNameByName("interpret.ForTestProduct").get());
+        objectName = "interpret.ForTestProduct";
+        JButton btn = new JButton(objectManager.getNameByName(objectName).get());
         btn.addActionListener(this);
 
 		panel.setPreferredSize(new Dimension(300, 300));
@@ -29,9 +31,7 @@ public class ObjectManagerDialog extends JDialog implements Runnable, ActionList
 		this.pack();
 		this.setVisible(true);
 	}
-	public void init(){
-		System.out.println("Hello");
-	}
+//	public void init(){ System.out.println("Hello"); } TODO: delete this line.
 
     @Override
     public void run() {
@@ -43,7 +43,7 @@ public class ObjectManagerDialog extends JDialog implements Runnable, ActionList
     @Override
     public void actionPerformed(ActionEvent e) {
         // TODO: Use some ObjectManager's method
-        ForTestProduct o = (ForTestProduct) objectManager.getObjectByName("interpret.ForTestProduct").get();
+        ForTestProduct o = (ForTestProduct) objectManager.getObjectByName(objectName).get();
         System.out.println(o.test);
     }
 }
