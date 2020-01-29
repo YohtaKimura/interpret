@@ -1,30 +1,46 @@
 package interpret;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 public class ObjectManager {
     // ObjectCreator が作成したオブジェクトの管理をするクラス．
     // Creator が作ったオブジェクトを保持する．
     private final Map<String, Optional> objectStore;
+    private final List<String> objectNames;
 
     ObjectManager() {
         objectStore = new HashMap<>();
+        objectNames = new ArrayList<>();
     }
 
-    void createAndSave(final String name) {
-        Optional o = ObjectCreator.createInstanceByNoArgument(name);
-        objectStore.put(name, o);
+    void createAndSave(final String objectName) {
+        Optional o = ObjectCreator.createInstanceByNoArgument(objectName);
+        objectStore.put(objectName, o);
+    }
+
+    void createAndSave(final String objectName, final String valuableName) {
+        if (Objects.isNull(valuableName)) {
+            createAndSave(objectName);
+        }
+
+        Optional o = ObjectCreator.createInstanceByNoArgument(objectName);
+        this.objectNames.add(valuableName);
+        objectStore.put(valuableName, o);
     }
 
     Optional<Object> getObjectByName(final String name) {
-        return objectStore.get(name);
+        if(objectStore.containsKey(name)) {
+            return objectStore.get(name);
+        }
+        return Optional.empty();
     }
 
     Optional<String> getNameByName(final String name) {
-        if (objectStore.containsKey(name)) return Optional.of(name);
+        if (objectNames.contains(name)) return Optional.of(name);
         return Optional.empty();
+    }
+
+    List<String> getNames() {
+        return objectNames;
     }
 }
