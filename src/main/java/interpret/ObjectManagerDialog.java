@@ -81,7 +81,9 @@ public class ObjectManagerDialog extends JDialog implements Runnable, ActionList
     public void actionPerformed(ActionEvent e) {
         // TODO: Use some ObjectManager's method
         String name = e.getActionCommand();
-        ForTestProduct o = (ForTestProduct) objectManager.getObjectByName(name).get();
-        System.out.println(o.test);
+        System.out.println(objectManager.getObjectByName(name).get().getClass());
+        //TODO: implement getFields
+        //objectManager.getFields(objectManager.getObjectByName(name).get());
+        //System.out.println(o.test);
     }
 }
