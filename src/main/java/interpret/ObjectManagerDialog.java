@@ -64,6 +64,7 @@ public class ObjectManagerDialog extends JDialog implements Runnable, ActionList
     private void setObjectButtonList() {
         for (String name : objectNames) {
             JButton btn = new JButton(name);
+            btn.setActionCommand(name);
             btn.addActionListener(this);
             objectButtons.add(btn);
         }
@@ -79,7 +80,8 @@ public class ObjectManagerDialog extends JDialog implements Runnable, ActionList
     @Override
     public void actionPerformed(ActionEvent e) {
         // TODO: Use some ObjectManager's method
-        ForTestProduct o = (ForTestProduct) objectManager.getObjectByName(objectNames.get(0)).get();
+        String name = e.getActionCommand();
+        ForTestProduct o = (ForTestProduct) objectManager.getObjectByName(name).get();
         System.out.println(o.test);
     }
 }
