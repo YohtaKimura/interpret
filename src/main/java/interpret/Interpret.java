@@ -11,7 +11,8 @@ public class Interpret {
                     @Override
                     public void run() {
                         final ObjectManager objectManager = new ObjectManager();
-                        final InitialFrame initialFrame = new InitialFrame(objectManager);
+                        ObjectManagerDialog objectManagerDialog = new ObjectManagerDialog(objectManager);
+                        final InitialFrame initialFrame = new InitialFrame(objectManager, objectManagerDialog);
                     }
                 }
         );

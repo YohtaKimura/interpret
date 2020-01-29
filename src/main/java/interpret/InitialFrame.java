@@ -10,9 +10,11 @@ public class InitialFrame implements ActionListener {
     private static final JPanel panel = new JPanel();
     private final JFrame frame;
     private final ObjectManager objectManager;
+    private final ObjectManagerDialog objectManagerDialog;
 
-    public InitialFrame(final ObjectManager objectManager){
+    public InitialFrame(final ObjectManager objectManager, final ObjectManagerDialog objectManagerDialog){
         this.objectManager = objectManager;
+        this.objectManagerDialog = objectManagerDialog;
         frame = new TextFrame(objectManager);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
@@ -34,5 +36,8 @@ public class InitialFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         new ObjectManagerDialog(this.objectManager, this.frame, this.panel);
+        //this.panel.setPreferredSize(new Dimension(300, 300));
+        //objectManagerDialog.setOwner(this.frame);
+        //objectManagerDialog.setPanel(this.panel);
     };
 }
