@@ -6,6 +6,8 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -83,7 +85,10 @@ public class ObjectManagerDialog extends JDialog implements Runnable, ActionList
         String name = e.getActionCommand();
         System.out.println(objectManager.getObjectByName(name).get().getClass());
         //TODO: implement getFields
-        //objectManager.getFields(objectManager.getObjectByName(name).get());
-        //System.out.println(o.test);
+        Object o = objectManager.getObjectByName(name).get();
+        Field[] fields = objectManager.getFields(o).get();
+        Method[] methods = objectManager.getMethods(o).get();
+        System.out.println(fields[0]);
+        System.out.println(methods[0]);
     }
 }

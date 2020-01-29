@@ -1,5 +1,7 @@
 package interpret;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.util.*;
 
 public class ObjectManager {
@@ -38,6 +40,14 @@ public class ObjectManager {
     Optional<String> getNameByName(final String name) {
         if (objectNames.contains(name)) return Optional.of(name);
         return Optional.empty();
+    }
+
+    Optional<Field[]> getFields(final Object o) {
+        return FieldsGetter.getFields(o);
+    }
+
+    Optional<Method[]> getMethods(final Object o) {
+        return MethodsGetter.getMethods(o);
     }
 
     List<String> getNames() {
