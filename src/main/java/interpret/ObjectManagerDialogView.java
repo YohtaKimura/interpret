@@ -11,20 +11,19 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 
-public class ObjectManagerDialog extends JDialog implements Runnable, ActionListener {
+public class ObjectManagerDialogView extends JDialog implements Runnable, ActionListener {
     private JFrame owner;
     private JPanel panel;
     private final ObjectManager objectManager;
     private List<String> objectNames;
     private List<JButton> objectButtons;
 
-    public ObjectManagerDialog(ObjectManager objectManager) {
+    public ObjectManagerDialogView(ObjectManager objectManager) {
         this(objectManager, null, null);
     }
 
-    public ObjectManagerDialog(ObjectManager objectManager, JFrame owner, JPanel panel){
+    public ObjectManagerDialogView(ObjectManager objectManager, JFrame owner, JPanel panel){
         super(owner);
         this.owner = owner;
         this.panel = panel;

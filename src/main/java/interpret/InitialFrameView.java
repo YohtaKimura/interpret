@@ -5,14 +5,14 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class InitialFrame implements ActionListener {
+public class InitialFrameView implements ActionListener {
     private static MenuItem propertiesMenu;
     private static final JPanel panel = new JPanel();
     private final JFrame frame;
     private final ObjectManager objectManager;
-    private final ObjectManagerDialog objectManagerDialog;
+    private final ObjectManagerDialogView objectManagerDialog;
 
-    public InitialFrame(final ObjectManager objectManager, final ObjectManagerDialog objectManagerDialog){
+    public InitialFrameView(final ObjectManager objectManager, final ObjectManagerDialogView objectManagerDialog){
         this.objectManager = objectManager;
         this.objectManagerDialog = objectManagerDialog;
         frame = new TextFrame(objectManager);
@@ -35,7 +35,7 @@ public class InitialFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        new ObjectManagerDialog(this.objectManager, this.frame, this.panel);
+        new ObjectManagerDialogView(this.objectManager, this.frame, this.panel);
         //this.panel.setPreferredSize(new Dimension(300, 300));
         //objectManagerDialog.setOwner(this.frame);
         //objectManagerDialog.setPanel(this.panel);

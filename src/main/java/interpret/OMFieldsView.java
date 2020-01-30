@@ -5,16 +5,12 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class OMMemberView extends JDialog implements ActionListener {
-    OMMemberView(JDialog owner) {
-        super(owner);
+public class OMFieldsView extends JDialog implements ActionListener {
+    public OMFieldsView() {
         getContentPane().setLayout(new FlowLayout());
-        JButton btn = new JButton("Fields");
+        JButton btn = new JButton("test");
         btn.addActionListener(this);
         getContentPane().add(btn);
-        JButton btn2 = new JButton("Methods");
-        btn2.addActionListener(this);
-        getContentPane().add(btn2);
         setTitle("O.M. Member View");
         setSize(200, 150);
         setVisible(true);
@@ -22,6 +18,6 @@ public class OMMemberView extends JDialog implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        new OMFieldsView();
+        System.out.println("hello");
     }
 }
