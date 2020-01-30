@@ -47,17 +47,17 @@ public class ObjectManager {
     }
 
     Optional<Object> getFirstFieldValue(final Object o) {
-        try {
-            return Optional.of(getFields(o).get()[0].get(o));
-        } catch (final IllegalAccessException ex) {
-            ex.printStackTrace();
-            return Optional.empty();
-        }
+        return getFieldValueByName(o,null);
     }
 
-    Optional<Object> getFirstFieldValueByName(final Object o, final String name) {
+    Optional<Object> getFieldValueByName(final Object o, final String name) {
         if (Objects.isNull(name)) {
-            return getFirstFieldValue(o);
+            try {
+                return Optional.of(getFields(o).get()[0].get(o));
+            } catch (final IllegalAccessException ex) {
+                ex.printStackTrace();
+                return Optional.empty();
+            }
         }
 
         try {
@@ -70,6 +70,19 @@ public class ObjectManager {
 
     Optional<Method[]> getMethods(final Object o) {
         return MethodsGetter.getMethods(o);
+    }
+
+    void invokeFirstMethod(final Object o) {
+        invokeMethodByName(o, null);
+    }
+
+    void invokeMethodByName(final Object o, final String name) {
+        if (Objects.isNull(name)) {
+            MethodInvoker.voidAndPublicMethodInvoke(o, MethodsGetter.getMethods(o).get()[0]);
+            return;
+        }
+        MethodInvoker.voidAndPublicMethodInvoke(o, MethodsGetter.getMethods(o).get()[0]); // TODO: use name
+        return;
     }
 
     List<String> getNames() {

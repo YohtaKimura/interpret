@@ -7,7 +7,7 @@ import java.awt.event.ActionListener;
 public class ForTestProduct {
     public static String test = "this is a String field. you can change by rewrite of java file.";
 
-    void hello() {
+    public void hello() {
         System.out.println("Hello");
     }
 }
