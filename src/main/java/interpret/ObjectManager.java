@@ -46,6 +46,28 @@ public class ObjectManager {
         return FieldsGetter.getFields(o);
     }
 
+    Optional<Object> getFirstFieldValue(final Object o) {
+        try {
+            return Optional.of(getFields(o).get()[0].get(o));
+        } catch (final IllegalAccessException ex) {
+            ex.printStackTrace();
+            return Optional.empty();
+        }
+    }
+
+    Optional<Object> getFirstFieldValueByName(final Object o, final String name) {
+        if (Objects.isNull(name)) {
+            return getFirstFieldValue(o);
+        }
+
+        try {
+            return Optional.of(getFields(o).get()[0].get(o)); // TODO: use name
+        } catch (final IllegalAccessException ex) {
+            ex.printStackTrace();
+            return Optional.empty();
+        }
+    }
+
     Optional<Method[]> getMethods(final Object o) {
         return MethodsGetter.getMethods(o);
     }
