@@ -6,8 +6,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class OMMemberView extends JDialog implements ActionListener {
-    OMMemberView(JDialog owner) {
+    private final ObjectManager objectManager;
+    private final Object o;
+    OMMemberView(JDialog owner, final ObjectManager objectManager, final Object o) {
         super(owner);
+        this.objectManager = objectManager;
+        this.o = o;
         getContentPane().setLayout(new FlowLayout());
         JButton btn = new JButton("Fields");
         btn.addActionListener(this);
@@ -22,6 +26,6 @@ public class OMMemberView extends JDialog implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        new OMFieldsView();
+        new OMFieldsView(this, objectManager, o);
     }
 }
