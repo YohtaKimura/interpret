@@ -22,6 +22,6 @@ public class OMFieldsView extends JDialog implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        objectManager.getFieldValueByName(o, null);
+        System.out.println(objectManager.getFieldValueByName(o, null).get());
     }
 }
