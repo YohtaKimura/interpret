@@ -1,6 +1,7 @@
 package interpret;
 
 import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -18,9 +19,12 @@ public class ConstructorsGetter {
         return Optional.empty();
     }
 
-    static Optional<Object> getNewInstance()
-    {
-        // return Optional.of(o.getClass().getConstructors()[0].newInstance(args));
-        return null;
+    static Optional<Object> getNewInstance(Constructor constructor, Object ...args) {
+        try {
+            return Optional.of(constructor.newInstance(args));
+        } catch (final IllegalAccessException | InvocationTargetException | InstantiationException e) {
+            // TODO: some
+        }
+        return Optional.empty();
     }
 }
