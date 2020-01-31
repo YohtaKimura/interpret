@@ -26,6 +26,4 @@ public class ConstructorsGetterTest {
         Constructor constructor = ConstructorsGetter.getFirstConstructorFromCtors(test).get();
         Assert.assertEquals(0, constructor.getGenericParameterTypes().length);
     }
-
-
 }

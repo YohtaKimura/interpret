@@ -17,4 +17,10 @@ public class ConstructorsGetter {
         }
         return Optional.empty();
     }
+
+    static Optional<Object> getNewInstance()
+    {
+        // return Optional.of(o.getClass().getConstructors()[0].newInstance(args));
+        return null;
+    }
 }
