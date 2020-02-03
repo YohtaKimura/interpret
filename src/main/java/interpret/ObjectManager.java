@@ -1,5 +1,8 @@
 package interpret;
 
+import org.graalvm.compiler.nodes.calc.IntegerDivRemNode;
+
+import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.*;
@@ -41,6 +44,15 @@ public class ObjectManager {
         if (objectNames.contains(name)) return Optional.of(name);
         return Optional.empty();
     }
+
+    Optional<List<Constructor>> getConstructors(final String objectName) {
+        return Optional.of(Arrays.asList(ConstructorsGetter.getConstructors(objectName).get()));
+    }
+
+    Optional<Constructor> getFirstConstructor(final String objectName) {
+        return ConstructorsGetter.getFirstConstructorFromCtors(objectName);
+    }
+
 
     Optional<Field[]> getFields(final Object o) {
         return FieldsGetter.getFields(o);
