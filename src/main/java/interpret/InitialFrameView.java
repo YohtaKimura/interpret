@@ -36,8 +36,5 @@ public class InitialFrameView implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         new ObjectManagerDialogView(this.objectManager, this.frame, this.panel);
-        //this.panel.setPreferredSize(new Dimension(300, 300));
-        //objectManagerDialog.setOwner(this.frame);
-        //objectManagerDialog.setPanel(this.panel);
     };
 }

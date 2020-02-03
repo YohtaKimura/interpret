@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Objects;
 import java.util.Optional;
 
 public class TextFrame extends JFrame {
@@ -15,22 +16,6 @@ public class TextFrame extends JFrame {
 
         objectNameField = new JTextField();
         valuableNameField = new JTextField();
-        final JButton button = new JButton("Generate");
-
-        button.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String name = new String(
-                  objectNameField.getText());
-                JOptionPane.showMessageDialog(
-                        null,
-                        objectNameField.getText() + " is what you input.");
-                ObjectCreator objectCreator = new ObjectCreator();
-                objectManager.createAndSave(objectNameField.getText(), valuableNameField.getText());
-                Optional o = objectManager.getObjectByName(valuableNameField.getText());
-                printToDialog(o.orElse(null));
-            }
-        });
 
         JPanel panel = new JPanel();
         panel.setLayout(new GridLayout(3, 2));
@@ -38,9 +23,45 @@ public class TextFrame extends JFrame {
         panel.add(objectNameField);
         panel.add(new JLabel("The valuable name", SwingConstants.LEFT));
         panel.add(valuableNameField);
-        panel.add(button);
-
+        addButtonToPanel(panel, objectManager);
         add(panel, BorderLayout.NORTH);
+    }
+
+    private void addButtonToPanel(JPanel panel, ObjectManager objectManager) {
+        final JButton generateButton = new JButton("Generate");
+        generateButton.setActionCommand("Generate");
+        generateButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (Objects.equals(e.getActionCommand(), "Generate")) {
+                String objectName = new String(
+                  objectNameField.getText());
+                JOptionPane.showMessageDialog(
+                        null,
+                        objectName + " is what you input.");
+                objectManager.createAndSave(objectNameField.getText(), valuableNameField.getText());
+                Optional o = objectManager.getObjectByName(valuableNameField.getText());
+                printToDialog(o.orElse(null));
+            }
+            }
+        });
+        panel.add(generateButton);
+
+        final JButton constructorsButton = new JButton("Constructors");
+        constructorsButton.setActionCommand("Constructors");
+        constructorsButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(Objects.equals(e.getActionCommand(), "Constructors")) {
+                String objectName = new String(
+                  objectNameField.getText());
+                JOptionPane.showMessageDialog(
+                        null,
+                         "Hello");
+            }
+            }
+        });
+        panel.add(constructorsButton);
     }
 
     String getText() {
