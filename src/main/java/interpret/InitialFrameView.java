@@ -15,7 +15,7 @@ public class InitialFrameView implements ActionListener {
     public InitialFrameView(final ObjectManager objectManager, final ObjectManagerDialogView objectManagerDialog){
         this.objectManager = objectManager;
         this.objectManagerDialog = objectManagerDialog;
-        frame = new TextFrame(objectManager);
+        frame = new InsideOfInitialFrameView(objectManager);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
 
