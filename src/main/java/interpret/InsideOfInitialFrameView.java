@@ -34,41 +34,11 @@ public class InsideOfInitialFrameView extends JFrame implements ActionListener {
         final JButton generateButton = new JButton("Generate");
         generateButton.setActionCommand("Generate");
         generateButton.addActionListener(this);
-//        generateButton.addActionListener(new ActionListener() {
-//            @Override
-//            public void actionPerformed(ActionEvent e) {
-//                System.out.println("h");
-//                if (Objects.equals(e.getActionCommand(), "Generate")) {
-//                String objectName = new String(
-//                  objectNameField.getText());
-//                JOptionPane.showMessageDialog(
-//                        null,
-//                        objectName + " is what you input.");
-//                objectManager.createAndSave(objectNameField.getText(), valuableNameField.getText());
-//                Optional o = objectManager.getObjectByName(valuableNameField.getText());
-//                printToDialog(o.orElse(null));
-//            }
-//            }
-//        });
         panel.add(generateButton);
 
         final JButton constructorsButton = new JButton("Constructors");
         constructorsButton.setActionCommand("Constructors");
         constructorsButton.addActionListener(this);
-//        constructorsButton.addActionListener(new ActionListener() {
-//            @Override
-//            public void actionPerformed(ActionEvent e) {
-        // TODO: Use some ObjectManager's method
-//                if(Objects.equals(e.getActionCommand(), "Constructors")) {
-//                    new ConstructorsListView(, objectManager);
-//                    String objectName = new String(
-//                            objectNameField.getText());
-//                    JOptionPane.showMessageDialog(
-//                            null,
-//                            "Hello");
-//                    System.out.println("oh");
-//                }
-//            }
         panel.add(constructorsButton);
     }
 
@@ -98,9 +68,6 @@ public class InsideOfInitialFrameView extends JFrame implements ActionListener {
         if (Objects.equals(buttonName, "Constructors")) {
             String objectName = new String(objectNameField.getText());
             new ConstructorsListView(this, objectManager, objectName);
-            JOptionPane.showMessageDialog(
-                    null,
-                    "Hello");
         }
     }
 }

@@ -18,7 +18,7 @@ public class ObjectManager {
         objectNames = new ArrayList<>();
     }
 
-    void createAndSave(final String objectName) {
+    void createAndSave(final String objectName) { // Need refactor.
         Optional o = ObjectCreator.createInstanceByNoArgument(objectName);
         objectStore.put(objectName, o);
     }
@@ -95,6 +95,11 @@ public class ObjectManager {
         }
         MethodInvoker.voidAndPublicMethodInvoke(o, MethodsGetter.getMethods(o).get()[0]); // TODO: use name
         return;
+    }
+
+    void invokeConstructorWithNoArgsAndSave(Constructor constructor, String valuableName) {
+        this.objectNames.add(valuableName);
+        this.objectStore.put(valuableName, ConstructorInvoker.getNewInstance(constructor));
     }
 
     List<String> getNames() {

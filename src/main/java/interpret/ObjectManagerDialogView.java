@@ -17,37 +17,24 @@ public class ObjectManagerDialogView extends JDialog implements Runnable, Action
     private JPanel panel;
     private final ObjectManager objectManager;
     private List<String> objectNames;
-    private List<JButton> objectButtons;
+
 
     public ObjectManagerDialogView(ObjectManager objectManager) {
-        this(objectManager, null, null);
+        this(objectManager, null);
     }
 
-    public ObjectManagerDialogView(ObjectManager objectManager, JFrame owner, JPanel panel){
+    public ObjectManagerDialogView(ObjectManager objectManager, JFrame owner){
         super(owner);
         this.owner = owner;
-        this.panel = panel;
+        this.panel = new JPanel();
         this.objectManager = objectManager;
-        this.objectButtons = new ArrayList<>();
         objectNames = objectManager.getNames();
-
 		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		this.setTitle("Object manager");
 		this.setMinimumSize(new Dimension(300, 160));
 		this.pack();
-		if(Objects.nonNull(panel)) {
-            setPanel(panel);
-        }
+		setPanel(panel);
 	}
-
-    private void setObjectsButton() {
-        for (JButton btn : objectButtons) {
-            panel.add(btn);
-        }
-        for (JButton btn : objectButtons) {
-            panel.add(btn);
-        }
-    }
 
     public void setOwner(JFrame owner) {
         this.owner = owner;
@@ -56,7 +43,6 @@ public class ObjectManagerDialogView extends JDialog implements Runnable, Action
     public void setPanel(JPanel panel) {
         this.panel = panel;
         setObjectButtonList();
-        setObjectsButton();
         this.panel.setSize(new Dimension(300, 300));
         this.setContentPane(this.panel);
         this.setVisible(true);
@@ -67,7 +53,7 @@ public class ObjectManagerDialogView extends JDialog implements Runnable, Action
             JButton btn = new JButton(name);
             btn.setActionCommand(name);
             btn.addActionListener(this);
-            objectButtons.add(btn);
+            panel.add(btn);
         }
     }
 

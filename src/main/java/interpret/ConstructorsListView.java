@@ -5,15 +5,13 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.lang.reflect.Constructor;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 public class ConstructorsListView extends JDialog implements ActionListener {
-    private final static String fieldsToken = "Fields";
-    private final static String methodsToken = "Methods";
     private final List<Constructor> constructorList;
-    private final List<String> constructorsNameList;
+    private final List<String> constructorNameList;
     private final ObjectManager objectManager;
     ConstructorsListView(JFrame owner, final ObjectManager objectManager, final String objectName) {
         this(owner, objectManager, objectName, null);
@@ -23,17 +21,16 @@ public class ConstructorsListView extends JDialog implements ActionListener {
         super(owner);
         this.objectManager = objectManager;
         this.constructorList = objectManager.getConstructors(objectName).get();
-        this.constructorsNameList = null; // TODO: implement
+        this.constructorNameList = constructorList.stream().map(c -> c.toString()).collect(Collectors.toList());
+//        this.constructorNameList.stream().forEach(name -> System.out.println(name));
 
         getContentPane().setLayout(new FlowLayout());
-        JButton btn = new JButton(fieldsToken);
-        btn.setActionCommand(fieldsToken);
-        btn.addActionListener(this);
-        getContentPane().add(btn);
-        JButton btn2 = new JButton(methodsToken);
-        btn2.setActionCommand(methodsToken);
-        btn2.addActionListener(this);
-        getContentPane().add(btn2);
+        for (String constructorsName: constructorNameList) {
+            JButton btn = new JButton(constructorsName);
+            btn.setActionCommand(constructorsName);
+            btn.addActionListener(this);
+            getContentPane().add(btn);
+        }
         setTitle("Constructors List");
         setSize(200, 150);
         setVisible(true);
@@ -41,7 +38,10 @@ public class ConstructorsListView extends JDialog implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        // final String token = e.getActionCommand();
-        System.out.println("Hello");
+        for (Constructor constructor: constructorList) {
+           if (Objects.equals(e.getActionCommand(), constructor.toString())) {
+               new InvokeConstructorView(this, objectManager, constructor);
+            }
+        }
     }
 }
