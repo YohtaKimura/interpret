@@ -102,6 +102,18 @@ public class ObjectManager {
         this.objectStore.put(valuableName, ConstructorInvoker.getNewInstance(constructor));
     }
 
+    void createOneElementArrayAndSave(final String className, final String valuableName) {
+        String replacedClassName = className.replace("[]","");
+        this.objectNames.add(valuableName);
+        this.objectStore.put(valuableName, ArrayCreator.createArray(replacedClassName, 1));
+    }
+
+    void createArrayAndSave(final String className, final String valuableName, final int length) {
+        String replacedClassName = className.replace("[]","");
+        this.objectNames.add(valuableName);
+        this.objectStore.put(valuableName, ArrayCreator.createArray(replacedClassName, length));
+    }
+
     List<String> getNames() {
         return objectNames;
     }

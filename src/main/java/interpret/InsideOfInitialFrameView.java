@@ -55,8 +55,14 @@ public class InsideOfInitialFrameView extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         String buttonName = e.getActionCommand();
-        if (Objects.equals(buttonName, "Generate")) {
-            String objectName = new String(objectNameField.getText());
+        String objectName = new String(objectNameField.getText());
+        if (objectName.endsWith("[]") && Objects.equals(buttonName, "Generate")) {
+            JOptionPane.showMessageDialog(
+                    null,
+                    objectName + " array is what you want");
+            objectManager.createOneElementArrayAndSave(objectName,valuableNameField.getText());
+        }
+        if (!objectName.endsWith("[]") && Objects.equals(buttonName, "Generate")) {
             JOptionPane.showMessageDialog(
                     null,
                     objectName + " is what you input.");
@@ -66,7 +72,6 @@ public class InsideOfInitialFrameView extends JFrame implements ActionListener {
         }
 
         if (Objects.equals(buttonName, "Constructors")) {
-            String objectName = new String(objectNameField.getText());
             new ConstructorsListView(this, objectManager, objectName);
         }
     }
