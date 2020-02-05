@@ -6,6 +6,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import java.lang.reflect.Array;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -70,6 +71,10 @@ public class ObjectManagerDialogView extends JDialog implements Runnable, Action
         String name = e.getActionCommand();
         System.out.println(objectManager.getObjectByName(name).get().getClass());
         Object o = objectManager.getObjectByName(name).get();
+        if (o.getClass().isArray()) {
+            System.out.println("Hello");
+            return; // TODO: implement OMMemberView for array
+        }
         Field[] fields = objectManager.getFields(o).get();
         Method[] methods = objectManager.getMethods(o).get();
         System.out.println(fields[0]);
