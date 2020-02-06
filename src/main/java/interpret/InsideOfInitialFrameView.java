@@ -60,7 +60,7 @@ public class InsideOfInitialFrameView extends JFrame implements ActionListener {
             JOptionPane.showMessageDialog(
                     null,
                     objectName + " array is what you want");
-            objectManager.createOneElementArrayAndSave(objectName,valuableNameField.getText());
+            objectManager.createOneElementArrayAndSave(objectName,valuableNameField.getText()); // TODO: multiple element
         }
         if (!objectName.endsWith("[]") && Objects.equals(buttonName, "Generate")) {
             JOptionPane.showMessageDialog(

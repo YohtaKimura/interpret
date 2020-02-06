@@ -12,4 +12,10 @@ public class ArrayCreatorTest {
         Object object = ArrayCreator.createArray("java.lang.Object", 2).get();
         Assert.assertEquals(2, Array.getLength(object));
     }
+
+    @Test
+    public void testCreateInstanceOfMyClass() throws Exception {
+        ForTestNotProduct[] array = (ForTestNotProduct[]) ArrayCreator.createArray("interpret.ForTestNotProduct", 1).get();
+        Assert.assertEquals("instance", array[0].instanceField);
+    }
 }

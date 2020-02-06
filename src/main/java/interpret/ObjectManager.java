@@ -114,6 +114,14 @@ public class ObjectManager {
         this.objectStore.put(valuableName, ArrayCreator.createArray(replacedClassName, length));
     }
 
+    Optional<Object> getArrayElement(final Object array, final int index) {
+        return ArrayElementGetter.getArrayElement(array,index);
+    }
+
+    boolean isArray(Object o) {
+        return o.getClass().isArray();
+    }
+
     List<String> getNames() {
         return objectNames;
     }
