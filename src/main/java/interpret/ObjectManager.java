@@ -63,18 +63,13 @@ public class ObjectManager {
     }
 
     Optional<Object> getFieldValueByName(final Object o, final String name) {
-        if (Objects.isNull(name)) {
-            try {
-                return Optional.of(getFields(o).get()[0].get(o));
-            } catch (final IllegalAccessException ex) {
-                ex.printStackTrace();
-                return Optional.empty();
-            }
-        }
-
+        Field[] fields = getFields(o).get();
         try {
-            return Optional.of(getFields(o).get()[0].get(o)); // TODO: use name
-        } catch (final IllegalAccessException ex) {
+        if (Objects.isNull(name)) {
+            return Optional.of(fields[0].get(o));
+        }
+        return Optional.of(Arrays.stream(fields).filter(f -> Objects.equals(f.getName(), name)).findFirst().get().get(o));
+        } catch (final IllegalAccessException ex ) {
             ex.printStackTrace();
             return Optional.empty();
         }

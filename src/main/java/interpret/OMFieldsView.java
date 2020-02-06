@@ -22,6 +22,9 @@ public class OMFieldsView extends JDialog implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        JOptionPane.showMessageDialog(
+                    null,
+                    objectManager.getFieldValueByName(o, null).get() + " is what you input.");
         System.out.println(objectManager.getFieldValueByName(o, null).get());
     }
 }
