@@ -58,6 +58,19 @@ public class ObjectManager {
         return FieldsGetter.getFields(o);
     }
 
+
+    Optional<List<String>> getFieldsNameList(final Object o) {
+        List<String> fieldsNameList = new ArrayList<>();
+        Field[] fields = FieldsGetter.getFields(o).get();
+        for (Field field: fields) {
+            fieldsNameList.add(field.getName());
+        }
+        if (fieldsNameList.isEmpty()) {
+            return Optional.empty();
+        }
+        return Optional.of(fieldsNameList);
+    }
+
     Optional<Object> getFirstFieldValue(final Object o) {
         return getFieldValueByName(o,null);
     }

@@ -1,5 +1,6 @@
 package interpret;
 
+import java.util.List;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -12,9 +13,13 @@ public class OMFieldsView extends JDialog implements ActionListener {
         this.objectManager = objectManager;
         this.o = o;
         getContentPane().setLayout(new FlowLayout());
-        JButton btn = new JButton(objectManager.getFields(o).get()[0].toString());
-        btn.addActionListener(this);
-        getContentPane().add(btn);
+        List<String> fieldsNameList = objectManager.getFieldsNameList(o).get();
+        for (String fieldName: fieldsNameList) {
+            final JButton btn = new JButton(fieldName);
+            btn.setActionCommand(fieldName);
+            btn.addActionListener(this);
+            getContentPane().add(btn);
+        }
         setTitle("O.M. Fields View");
         setSize(200, 150);
         setVisible(true);
@@ -22,9 +27,9 @@ public class OMFieldsView extends JDialog implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        String fieldName = e.getActionCommand();
         JOptionPane.showMessageDialog(
                     null,
-                    objectManager.getFieldValueByName(o, null).get() + " is what you input.");
-        System.out.println(objectManager.getFieldValueByName(o, null).get());
+                    objectManager.getFieldValueByName(o, fieldName).get());
     }
 }
