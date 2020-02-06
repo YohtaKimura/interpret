@@ -9,7 +9,7 @@ public class ArrayCreator {
         try {
             Class type = Class.forName(className);
             Object[] array = (Object[]) Array.newInstance(type, length);
-            for (int i = 0; i < array.length; i++) {
+            for (int i = 0; i < length; i++) {
                 array[i] = type.getConstructor().newInstance();
             }
             return Optional.of(array);

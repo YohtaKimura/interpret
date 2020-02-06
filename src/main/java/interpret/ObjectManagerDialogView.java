@@ -34,7 +34,9 @@ public class ObjectManagerDialogView extends JDialog implements Runnable, Action
 		this.setTitle("Object manager");
 		this.setMinimumSize(new Dimension(300, 160));
 		this.pack();
-		setPanel(panel);
+		if (Objects.nonNull(owner)) {
+      		setPanel(panel);
+        }
 	}
 
     public void setOwner(JFrame owner) {
