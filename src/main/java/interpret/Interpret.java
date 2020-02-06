@@ -9,8 +9,7 @@ public class Interpret {
                     @Override
                     public void run() {
                         final ObjectManager objectManager = new ObjectManager();
-                        ObjectManagerDialogView objectManagerDialog = new ObjectManagerDialogView(objectManager);
-                        final InitialFrameView initialFrame = new InitialFrameView(objectManager, objectManagerDialog);
+                        final InitialFrameView initialFrame = new InitialFrameView(objectManager);
                     }
                 }
         );

@@ -9,11 +9,9 @@ public class InitialFrameView implements ActionListener {
     private static MenuItem propertiesMenu;
     private final JFrame frame;
     private final ObjectManager objectManager;
-    private final ObjectManagerDialogView objectManagerDialog;
 
-    public InitialFrameView(final ObjectManager objectManager, final ObjectManagerDialogView objectManagerDialog){
+    public InitialFrameView(final ObjectManager objectManager){
         this.objectManager = objectManager;
-        this.objectManagerDialog = objectManagerDialog;
         frame = new InsideOfInitialFrameView(objectManager);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
