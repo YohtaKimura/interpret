@@ -44,4 +44,14 @@ public class ObjectManagerTest {
         Assert.assertEquals("hoge", nameList.get(0));
         Assert.assertEquals("hey", nameList.get(1));
     }
+
+    @Test
+    public void testSetValue() throws Exception {
+        ObjectManager objectManager = new ObjectManager();
+        objectManager.createAndSave("java.lang.String", "hey");
+        objectManager.createAndSave("interpret.ForTestNotProduct", "target");
+        ForTestNotProduct o = (ForTestNotProduct) objectManager.getObjectByName("target").get();
+        objectManager.setValue(o, "instanceField", "hey");
+        Assert.assertEquals("", o.instanceField);
+    }
 }

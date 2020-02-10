@@ -12,4 +12,16 @@ public class FieldsGetter {
         }
         return Optional.empty();
     }
+
+    static Optional<Field> getFieldByName(final Object o, final String name) {
+        try {
+            if(Objects.nonNull(o)) {
+                return Optional.of(o.getClass().getField(name));
+            }
+        } catch (final NoSuchFieldException e) {
+            e.printStackTrace();
+            return Optional.empty();
+        }
+        return Optional.empty();
+    }
 }

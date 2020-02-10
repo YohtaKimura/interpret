@@ -153,6 +153,17 @@ public class ObjectManager {
         return objectNamesAlreadyExistByObjectFieldType;
     }
 
+    Optional<Object> setValue(final Object o, final String previousValuableName, final String newValuableName) {
+        Field previousField = FieldsGetter.getFieldByName(o, previousValuableName).get();
+        Optional<Object> previousValue = getFieldValueByName(o, previousValuableName);
+        try {
+            previousField.set(o, objectStore.get(newValuableName).get());
+        } catch (final IllegalAccessException e) {
+            e.printStackTrace();
+        }
+        return previousValue;
+    }
+
     List<String> getNames() {
         return objectNames;
     }
