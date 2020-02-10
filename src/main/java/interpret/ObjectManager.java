@@ -5,6 +5,7 @@ import org.graalvm.compiler.nodes.calc.IntegerDivRemNode;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.lang.reflect.Type;
 import java.util.*;
 
 public class ObjectManager {
@@ -130,9 +131,21 @@ public class ObjectManager {
         return o.getClass().isArray();
     }
 
-    String getType(final Object o, final String field){
+    Optional<String> getTypeAsString(final Object o, final String field) {
         Field targetField = Arrays.stream(getFields(o).get()).filter(f -> Objects.equals(f.getName(), field)).findFirst().get();
-        return TypeGetter.getType(targetField).getTypeName();
+        return Optional.of(TypeGetter.getType(targetField).getTypeName());
+    }
+
+    Type getType(final Object o, final String field) {
+        Field targetField = Arrays.stream(getFields(o).get()).filter(f -> Objects.equals(f.getName(), field)).findFirst().get();
+        return TypeGetter.getType(targetField);
+    }
+
+
+    List<String> getObjectNamesAlreadyGeneratedByType(final Object o, final String field) {
+        String type = getTypeAsString(o, field).get();
+        objectStore.values().stream().filter(ob -> Objects.equals(ob.get().getClass().getTypeName(), type));
+        return null;
     }
 
     List<String> getNames() {

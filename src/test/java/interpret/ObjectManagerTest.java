@@ -5,8 +5,6 @@ import org.junit.Test;
 
 import java.util.Optional;
 
-import static org.junit.Assert.*;
-
 public class ObjectManagerTest {
     // TODO: make test single method in one test.
     @Test
@@ -30,6 +28,6 @@ public class ObjectManagerTest {
     public void testGetTypeOfField() throws Exception {
         ObjectManager objectManager = new ObjectManager();
         ForTestNotProduct o = new ForTestNotProduct();
-        Assert.assertEquals("java.lang.String", objectManager.getType(o, "test"));
+        Assert.assertEquals("java.lang.String", objectManager.getTypeAsString(o, "test").get());
     }
 }
