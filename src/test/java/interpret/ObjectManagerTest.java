@@ -25,4 +25,11 @@ public class ObjectManagerTest {
         Optional o = objectManager.getNameByName("interpret.ForTestNotProduct");
         Assert.assertEquals("interpret.ForTestNotProduct", o.get());
     }
+
+    @Test
+    public void testGetTypeOfField() throws Exception {
+        ObjectManager objectManager = new ObjectManager();
+        ForTestNotProduct o = new ForTestNotProduct();
+        Assert.assertEquals("java.lang.String", objectManager.getType(o, "test"));
+    }
 }

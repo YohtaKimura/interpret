@@ -130,6 +130,11 @@ public class ObjectManager {
         return o.getClass().isArray();
     }
 
+    String getType(final Object o, final String field){
+        Field targetField = Arrays.stream(getFields(o).get()).filter(f -> Objects.equals(f.getName(), field)).findFirst().get();
+        return TypeGetter.getType(targetField).getTypeName();
+    }
+
     List<String> getNames() {
         return objectNames;
     }
