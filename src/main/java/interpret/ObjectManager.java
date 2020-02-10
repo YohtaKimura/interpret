@@ -142,10 +142,15 @@ public class ObjectManager {
     }
 
 
-    List<String> getObjectNamesAlreadyGeneratedByType(final Object o, final String field) {
-        String type = getTypeAsString(o, field).get();
-        objectStore.values().stream().filter(ob -> Objects.equals(ob.get().getClass().getTypeName(), type));
-        return null;
+    List<String> getObjectNamesAlreadyExistByObjectFieldType(final Object o, final String field) {
+        final String type = getTypeAsString(o, field).get();
+        final List objectNamesAlreadyExistByObjectFieldType = new ArrayList();
+        for (String key : objectStore.keySet()) {
+            if (Objects.equals(objectStore.get(key).get().getClass().getTypeName(), type)) {
+                objectNamesAlreadyExistByObjectFieldType.add(key);
+            }
+        }
+        return objectNamesAlreadyExistByObjectFieldType;
     }
 
     List<String> getNames() {

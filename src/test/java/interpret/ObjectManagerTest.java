@@ -3,6 +3,7 @@ package interpret;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.util.List;
 import java.util.Optional;
 
 public class ObjectManagerTest {
@@ -29,5 +30,18 @@ public class ObjectManagerTest {
         ObjectManager objectManager = new ObjectManager();
         ForTestNotProduct o = new ForTestNotProduct();
         Assert.assertEquals("java.lang.String", objectManager.getTypeAsString(o, "test").get());
+    }
+
+    @Test
+    public void testGetObjectNamesAlreadyExistByObjectFieldType() throws Exception {
+        ObjectManager objectManager = new ObjectManager();
+        objectManager.createAndSave("java.lang.String", "hey");
+        objectManager.createAndSave("java.lang.String", "hoge");
+        objectManager.createAndSave("interpret.ForTestNotProduct", "target");
+        Object o = objectManager.getObjectByName("target").get();
+        List<String> nameList = objectManager.getObjectNamesAlreadyExistByObjectFieldType(o, "test");
+        // nameList.stream().forEach(e -> System.out.println(e));
+        Assert.assertEquals("hoge", nameList.get(0));
+        Assert.assertEquals("hey", nameList.get(1));
     }
 }
