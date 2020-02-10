@@ -164,6 +164,38 @@ public class ObjectManager {
         return previousValue;
     }
 
+    Optional<Object> setStringValueDirectly(final Object o, final String previousValuableName, final String newValue) {
+        Field previousField = FieldsGetter.getFieldByName(o, previousValuableName).get();
+        Optional<Object> previousValue = getFieldValueByName(o, previousValuableName);
+        try {
+            previousField.set(o, newValue);
+        } catch (final IllegalAccessException e) {
+            e.printStackTrace();
+        }
+        return previousValue;
+    }
+
+    Optional<Object> setPrimitiveIntValueDirectly(final Object o, final String previousValuableName, final String newValue) {
+        Field previousField = FieldsGetter.getFieldByName(o, previousValuableName).get();
+        Optional<Object> previousValue = getFieldValueByName(o, previousValuableName);
+        try {
+            previousField.setInt(o, Integer.parseInt(newValue));
+        } catch (final IllegalAccessException e) {
+            e.printStackTrace();
+        }
+        return previousValue;
+    }
+
+    boolean isString(final Object o, final String fieldName) {
+        Field field = FieldsGetter.getFieldByName(o, fieldName).get();
+        return Objects.equals(field.getType().getTypeName(), "java.lang.String");
+    }
+
+    boolean isPrimitive(final Object o, final String fieldName) {
+        Field field = FieldsGetter.getFieldByName(o, fieldName).get();
+        return field.getType().isPrimitive();
+    }
+
     List<String> getNames() {
         return objectNames;
     }
