@@ -196,6 +196,10 @@ public class ObjectManager {
         return field.getType().isPrimitive();
     }
 
+    List<String> getParameterNameListOfConstructor(final Constructor constructor) {
+        
+        return null;
+    }
     List<String> getNames() {
         return objectNames;
     }
