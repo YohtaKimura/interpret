@@ -7,6 +7,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.Type;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class ObjectManager {
     // ObjectCreator が作成したオブジェクトの管理をするクラス．
@@ -196,10 +197,10 @@ public class ObjectManager {
         return field.getType().isPrimitive();
     }
 
-    List<String> getParameterNameListOfConstructor(final Constructor constructor) {
-        
-        return null;
+    Optional<List<String>> getParameterNameListOfConstructor(final Constructor constructor) {
+        return Optional.of(Arrays.asList(constructor.getParameters()).stream().map(p -> p.getName()).collect(Collectors.toList()));
     }
+
     List<String> getNames() {
         return objectNames;
     }
