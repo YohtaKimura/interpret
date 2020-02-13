@@ -12,12 +12,12 @@ public class OMFieldsView extends JDialog implements ActionListener {
     private final ObjectManager objectManager;
     private final Object o;
     private final Map<String, JComboBox> jComboBoxMap;
-    private final Map<String, List<String>> valuableListsList;
+    private final Map<String, List<String>> valuableListsMap;
     public OMFieldsView(JDialog owner, final ObjectManager objectManager, Object o) {
         this.objectManager = objectManager;
         this.o = o;
         this.jComboBoxMap = new HashMap<>();
-        this.valuableListsList = new HashMap<>();
+        this.valuableListsMap = new HashMap<>();
         List<String> fieldsNameList = objectManager.getFieldsNameList(o).get();
         getContentPane().setLayout(new GridLayout(fieldsNameList.size(), 4));
         for (String fieldName: fieldsNameList) {
@@ -26,7 +26,7 @@ public class OMFieldsView extends JDialog implements ActionListener {
             btn.addActionListener(this);
             getContentPane().add(btn);
             List<String> valuableList = objectManager.getObjectNamesAlreadyExistByObjectFieldType(o, fieldName);
-            valuableListsList.put(fieldName, valuableList);
+            valuableListsMap.put(fieldName, valuableList);
             List<String> messageList = valuableList.stream().map(val -> val + ": " + objectManager.getObjectByName(val).get().toString()).collect(Collectors.toList());
             JComboBox combo = new JComboBox(messageList.toArray());
             jComboBoxMap.put(fieldName, combo);
@@ -58,7 +58,7 @@ public class OMFieldsView extends JDialog implements ActionListener {
         if (Objects.equals(command[0], "Change")) {
             final String fieldName = command[1];
             final int index = jComboBoxMap.get(fieldName).getSelectedIndex();
-            final String newValuableName = valuableListsList.get(fieldName).get(index);
+            final String newValuableName = valuableListsMap.get(fieldName).get(index);
             objectManager.setValue(o, fieldName, newValuableName);
             return;
         }

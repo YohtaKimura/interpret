@@ -72,7 +72,8 @@ public class InsideOfInitialFrameView extends JFrame implements ActionListener {
         }
 
         if (Objects.equals(buttonName, "Constructors")) {
-            new ConstructorsListView(this, objectManager, objectName);
+            new ConstructorGetterView(this, objectManager, objectNameField.getText(), valuableNameField.getText());
+            // new ConstructorsListView(this, objectManager, objectName);
         }
     }
 }

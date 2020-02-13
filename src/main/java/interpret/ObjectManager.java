@@ -201,6 +201,36 @@ public class ObjectManager {
         return Optional.of(Arrays.asList(constructor.getParameters()).stream().map(p -> p.getName()).collect(Collectors.toList()));
     }
 
+    Optional<List<String>> getParameterNameListOfConstructor(final String objectName, final String ... parameterTypes) {
+        List<String> parameterTypesAsStringList = Arrays.asList(parameterTypes);
+        List<Class<?>> types = getTypes(parameterTypesAsStringList);
+        return getParameterNameListOfConstructor(ConstructorsGetter.getConstructorByParameterTypes(objectName, types.toArray(new Class<?>[types.size()])).get());
+    }
+
+
+    Optional<Map<String, String>> getParameterTypeMapOfConstructor(final String objectName, final String ... parameterTypes) {
+        List<String> parameterTypesAsStringList = Arrays.asList(parameterTypes);
+        List<Class<?>> types = getTypes(parameterTypesAsStringList);
+        List<String> parameterNameListOfConstructor = getParameterNameListOfConstructor(ConstructorsGetter.getConstructorByParameterTypes(objectName, types.toArray(new Class<?>[types.size()])).get()).get();
+        Map<String, String> parameterTypeMapOfConstructor = new HashMap<>();
+        for (String parameterName: parameterNameListOfConstructor) {
+            parameterTypeMapOfConstructor.put(parameterName, types.get(parameterNameListOfConstructor.indexOf(parameterName)).getTypeName());
+        }
+        return Optional.of(parameterTypeMapOfConstructor);
+    }
+
+    private List<Class<?>> getTypes(List<String> parameterTypesAsStringList) {
+        List<Class<?>> types = new ArrayList<>();
+        for (String parameterTypesAsString : parameterTypesAsStringList) {
+            try {
+                types.add(Class.forName(parameterTypesAsString));
+            } catch (final ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
+        return types;
+    }
+
     List<String> getNames() {
         return objectNames;
     }
