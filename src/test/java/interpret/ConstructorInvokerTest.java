@@ -15,4 +15,18 @@ public class ConstructorInvokerTest {
         Object newOne = ConstructorInvoker.getNewInstance(constructor).get();
         Assert.assertTrue(newOne instanceof ForTestNotProduct);
     }
+
+    @Test
+    public void invokeStringConstructorTest() throws Exception {
+        Constructor constructor = String.class.getConstructor(String.class);
+        Object newOne = ConstructorInvoker.getNewInstance(constructor, "a").get();
+        Assert.assertEquals("a", newOne);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void invokeStringConstructorFails() throws Exception {
+        Constructor constructor = String.class.getConstructor(String.class);
+        Object newOne = ConstructorInvoker.getNewInstance(constructor, null).get();
+    }
+
 }

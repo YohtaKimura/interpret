@@ -13,9 +13,10 @@ public class ConstructorInvoker {
         }
 
         try {
+            System.out.println(constructor);
+            System.out.println(args);
             return Optional.of(constructor.newInstance(args));
         } catch (final IllegalAccessException | InvocationTargetException | InstantiationException e) {
-            // TODO: some
             System.out.println("Error is occurred in ContructorInvoker class");
         }
         return Optional.empty();

@@ -112,6 +112,11 @@ public class ObjectManager {
         this.objectStore.put(valuableName, ConstructorInvoker.getNewInstance(constructor));
     }
 
+    void invokeConstructorAndSave(final Constructor constructor, String valuableName, Object ... args) {
+        this.objectNames.add(valuableName);
+        this.objectStore.put(valuableName, ConstructorInvoker.getNewInstance(constructor, args));
+    }
+
     void createOneElementArrayAndSave(final String className, final String valuableName) {
         String replacedClassName = className.replace("[]","");
         this.objectNames.add(valuableName);
@@ -195,6 +200,12 @@ public class ObjectManager {
     boolean isPrimitive(final Object o, final String fieldName) {
         Field field = FieldsGetter.getFieldByName(o, fieldName).get();
         return field.getType().isPrimitive();
+    }
+
+    Optional<Constructor> getConstructor(final String objectName, final String ... parameterTypes) {
+        List<String> parameterTypesAsStringList = Arrays.asList(parameterTypes);
+        List<Class<?>> types = getTypes(parameterTypesAsStringList);
+        return Optional.of(ConstructorsGetter.getConstructorByParameterTypes(objectName, types.toArray(new Class<?>[types.size()])).get());
     }
 
     Optional<List<String>> getParameterNameListOfConstructor(final Constructor constructor) {
