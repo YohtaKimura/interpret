@@ -34,6 +34,7 @@ public class OMMethodsView extends JDialog implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         String methodName = e.getActionCommand();
-        objectManager.invokeMethodByName(o, methodName);
+        // objectManager.invokeMethodByName(o, methodName);
+        new OMInvokeMethodView(this, objectManager, o, methodName);
     }
 }

@@ -98,29 +98,49 @@ public class ObjectManager {
         return Optional.of(Arrays.asList(MethodsGetter.getMethods(o).get()).stream().map(m -> m.getName()).collect(Collectors.toList()));
     }
 
+    Optional<List<String>> getMethodParameterNameList(final Object o, final String name) {
+        return Optional.of(Arrays.asList(getFirstMethodFoundByName(o, name).getParameters()).stream().map(p -> p.getName()).collect(Collectors.toList()));
+    }
+
+    Optional<Map<String, String>> getParameterTypeMapOfMethod(final Method method) {
+        List<String> parameterNameList = Arrays.asList(method.getParameters()).stream().map(p -> p.getName()).collect(Collectors.toList());
+        List<String> parameterTypesAsStringList = Arrays.asList(method.getParameterTypes()).stream().map(t -> t.getTypeName()).collect(Collectors.toList());
+        Map<String, String> parameterTypeMapOfMethod = new HashMap<>();
+        for (String parameterName: parameterNameList) {
+            parameterTypeMapOfMethod.put(parameterName, parameterTypesAsStringList.get(parameterNameList.indexOf(parameterName)));
+        }
+        return Optional.of(parameterTypeMapOfMethod);
+    }
+
     void invokeFirstMethod(final Object o) {
         invokeMethodByName(o, null);
     }
 
     void invokeMethodByName(final Object o, final String name) {
+        final Method firstMethodFoundByName = getFirstMethodFoundByName(o, name);
+        if (firstMethodFoundByName == null) return;
+        MethodInvoker.voidAndPublicMethodInvoke(o, firstMethodFoundByName);
+    }
+
+    public Method getFirstMethodFoundByName(Object o, String name) {
         final Method[] methods = MethodsGetter.getMethods(o).get();
         final List<Method> methodsList = Arrays.asList(methods);
         if (Objects.isNull(name)) {
             MethodInvoker.voidAndPublicMethodInvoke(o, methodsList.get(0));
-            return;
+            return null;
         }
         final Method firstMethodFoundByName = methodsList.stream().filter(m -> Objects.equals(m.getName(), name)).findFirst().get();
-        MethodInvoker.voidAndPublicMethodInvoke(o, firstMethodFoundByName);
+        return firstMethodFoundByName;
     }
 
-        void invokeMethodByNameWithArgs(final Object o, final String name, final Object ... args) {
+    void invokeMethodByNameWithArgs(final Object o, final Method name, final Object ... args) {
         final Method[] methods = MethodsGetter.getMethods(o).get();
         final List<Method> methodsList = Arrays.asList(methods);
         if (Objects.isNull(name)) {
             MethodInvoker.voidAndPublicMethodInvoke(o, methodsList.get(0), args);
             return;
         }
-        final Method firstMethodFoundByName = methodsList.stream().filter(m -> Objects.equals(m.getName(), name)).findFirst().get();
+        final Method firstMethodFoundByName = methodsList.stream().filter(m -> Objects.equals(m.getName(), name.getName())).findFirst().get();
         MethodInvoker.voidAndPublicMethodInvoke(o, firstMethodFoundByName, args);
     }
 

@@ -12,4 +12,8 @@ public class ForTestProduct {
     public void hello() {
         System.out.println("Hello");
     }
+
+    public void hey(final String words) {
+        System.out.println(words);
+    }
 }
