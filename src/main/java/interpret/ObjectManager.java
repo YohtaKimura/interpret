@@ -94,17 +94,34 @@ public class ObjectManager {
         return MethodsGetter.getMethods(o);
     }
 
+    Optional<List<String>> getMethodNamesList(final Object o) {
+        return Optional.of(Arrays.asList(MethodsGetter.getMethods(o).get()).stream().map(m -> m.getName()).collect(Collectors.toList()));
+    }
+
     void invokeFirstMethod(final Object o) {
         invokeMethodByName(o, null);
     }
 
     void invokeMethodByName(final Object o, final String name) {
+        final Method[] methods = MethodsGetter.getMethods(o).get();
+        final List<Method> methodsList = Arrays.asList(methods);
         if (Objects.isNull(name)) {
-            MethodInvoker.voidAndPublicMethodInvoke(o, MethodsGetter.getMethods(o).get()[0]);
+            MethodInvoker.voidAndPublicMethodInvoke(o, methodsList.get(0));
             return;
         }
-        MethodInvoker.voidAndPublicMethodInvoke(o, MethodsGetter.getMethods(o).get()[0]); // TODO: use name
-        return;
+        final Method firstMethodFoundByName = methodsList.stream().filter(m -> Objects.equals(m.getName(), name)).findFirst().get();
+        MethodInvoker.voidAndPublicMethodInvoke(o, firstMethodFoundByName);
+    }
+
+        void invokeMethodByNameWithArgs(final Object o, final String name, final Object ... args) {
+        final Method[] methods = MethodsGetter.getMethods(o).get();
+        final List<Method> methodsList = Arrays.asList(methods);
+        if (Objects.isNull(name)) {
+            MethodInvoker.voidAndPublicMethodInvoke(o, methodsList.get(0), args);
+            return;
+        }
+        final Method firstMethodFoundByName = methodsList.stream().filter(m -> Objects.equals(m.getName(), name)).findFirst().get();
+        MethodInvoker.voidAndPublicMethodInvoke(o, firstMethodFoundByName, args);
     }
 
     void invokeConstructorWithNoArgsAndSave(Constructor constructor, String valuableName) {
