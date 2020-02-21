@@ -1,9 +1,12 @@
 package interpret;
 
+import com.sun.tools.javac.util.StringUtils;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Objects;
 
 public class ConstructorGetterView extends JDialog implements ActionListener {
     private JFrame owner;
@@ -32,6 +35,10 @@ public class ConstructorGetterView extends JDialog implements ActionListener {
         getButton.setActionCommand("Get");
         getButton.addActionListener(this);
         panel.add(getButton);
+        final JButton getByConstructorListButton = new JButton("GetByConstructorList");
+        getByConstructorListButton.setActionCommand("GetByConstructorList");
+        getByConstructorListButton.addActionListener(this);
+        panel.add(getByConstructorListButton);
         add(panel, BorderLayout.NORTH);
         setVisible(true);
     }
@@ -41,6 +48,13 @@ public class ConstructorGetterView extends JDialog implements ActionListener {
         String buttonName = e.getActionCommand();
         String objectName = objectNameField.getText();
         String typesOfParameters = typesOfParametersField.getText();
-        new ConstructorView(this, objectManager, objectName, this.valuableName, typesOfParameters);
-            }
+
+        if (Objects.equals(buttonName, "Get")) {
+            new ConstructorView(this, this.objectManager, objectName, this.valuableName, typesOfParameters);
+            return;
+        }
+        if (Objects.equals(buttonName, "GetByConstructorList")) {
+            new ConstructorsListView(this, this.objectManager, objectName, this.valuableName);
+        }
+    }
 }
