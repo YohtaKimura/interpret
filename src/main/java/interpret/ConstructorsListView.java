@@ -23,13 +23,15 @@ public class ConstructorsListView extends JDialog implements ActionListener {
         this.constructorList = objectManager.getConstructors(objectName).get();
         this.constructorNameList = constructorList.stream().map(c -> c.getName()).collect(Collectors.toList());
 //        this.constructorNameList.stream().forEach(name -> System.out.println(name));
-
-        getContentPane().setLayout(new FlowLayout());
+// TODO: make container of parameters
+        final Container container = getContentPane();
+        container.setLayout(new GridLayout(0, 2));
         for (String constructorsName: constructorNameList) {
             JButton btn = new JButton(constructorsName);
             btn.setActionCommand(constructorsName);
             btn.addActionListener(this);
-            getContentPane().add(btn);
+            container.add(btn);
+            container.add(new Label(constructorList.get(constructorNameList.indexOf(constructorsName)).getParameterTypes().toString()));
         }
         setTitle("Constructors List");
         setSize(200, 150);
