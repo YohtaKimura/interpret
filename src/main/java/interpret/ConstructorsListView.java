@@ -5,8 +5,11 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.lang.reflect.Constructor;
+import java.lang.reflect.Type;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 public class ConstructorsListView extends JDialog implements ActionListener {
@@ -31,7 +34,14 @@ public class ConstructorsListView extends JDialog implements ActionListener {
             btn.setActionCommand(constructorsName);
             btn.addActionListener(this);
             container.add(btn);
-            container.add(new Label(constructorList.get(constructorNameList.indexOf(constructorsName)).getParameterTypes().toString()));
+            Class[] types = constructorList.get(constructorNameList.indexOf(constructorsName)).getParameterTypes();
+            List<String> typeStringList = Arrays.stream(types).map(t -> t.getTypeName()).collect(Collectors.toList());
+            StringBuilder stringLabel = new StringBuilder();
+            for (final String typeString: typeStringList) {
+                stringLabel.append(typeString);
+                stringLabel.append(", ");
+            }
+            container.add(new Label(stringLabel.toString()));
         }
         setTitle("Constructors List");
         setSize(200, 150);
