@@ -14,6 +14,8 @@ import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 public class ConstructorsListView extends JDialog implements ActionListener {
+    private final String objectName;
+    private final String valuableName;
     private final List<Constructor> constructorList;
     private final List<String> constructorNameList;
     private final ObjectManager objectManager;
@@ -24,6 +26,8 @@ public class ConstructorsListView extends JDialog implements ActionListener {
         ConstructorsListView(JDialog owner, final ObjectManager objectManager, final String objectName, final String valuableName) {
         super(owner);
         this.objectManager = objectManager;
+        this.objectName = objectName;
+        this.valuableName = valuableName;
         this.constructorList = objectManager.getConstructors(objectName).get();
         this.constructorNameList = constructorList.stream().map(c -> c.getName()).collect(Collectors.toList());
 //        this.constructorNameList.stream().forEach(name -> System.out.println(name));
@@ -41,7 +45,7 @@ public class ConstructorsListView extends JDialog implements ActionListener {
                 }
             };
             String parametersList = stringLabel.toString();
-            btn.setActionCommand(constructor.getName() + ", " + parametersList);
+            btn.setActionCommand(parametersList);
             btn.addActionListener(this);
             container.add(btn);
             container.add(new Label(parametersList));
@@ -53,12 +57,6 @@ public class ConstructorsListView extends JDialog implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        for (Constructor constructor: constructorList) {
-           if (Objects.equals(e.getActionCommand(), constructor.toString())) {
-
-               // TODO: new ConstructorView(final JDialog owner, final ObjectManager objectManager, final String objectName, final String valuableName, final String parameterTypes)
-               new InvokeConstructorView(this, objectManager, constructor);
-            }
-        }
+        new ConstructorView(this, this.objectManager, this.objectName, this.valuableName, e.getActionCommand());
     }
 }
