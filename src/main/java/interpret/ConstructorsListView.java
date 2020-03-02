@@ -5,6 +5,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.lang.reflect.Constructor;
+import java.lang.reflect.Parameter;
 import java.lang.reflect.Type;
 import java.util.Arrays;
 import java.util.List;
@@ -29,19 +30,21 @@ public class ConstructorsListView extends JDialog implements ActionListener {
 // TODO: make container of parameters
         final Container container = getContentPane();
         container.setLayout(new GridLayout(0, 2));
-        for (String constructorsName: constructorNameList) {
-            JButton btn = new JButton(constructorsName);
-            btn.setActionCommand(constructorsName);
+        for (Constructor constructor: constructorList) {
+            JButton btn = new JButton(constructor.getName());
+            StringBuilder stringLabel = new StringBuilder();
+            Parameter[] parameters = constructor.getParameters();
+            for (int i = 0; i < parameters.length; i++) {
+                stringLabel.append(parameters[i].getType().getName());
+                if (i < parameters.length - 1) {
+                    stringLabel.append(", ");
+                }
+            };
+            String parametersList = stringLabel.toString();
+            btn.setActionCommand(constructor.getName() + ", " + parametersList);
             btn.addActionListener(this);
             container.add(btn);
-            Class[] types = constructorList.get(constructorNameList.indexOf(constructorsName)).getParameterTypes();
-            List<String> typeStringList = Arrays.stream(types).map(t -> t.getTypeName()).collect(Collectors.toList());
-            StringBuilder stringLabel = new StringBuilder();
-            for (final String typeString: typeStringList) {
-                stringLabel.append(typeString);
-                stringLabel.append(", ");
-            }
-            container.add(new Label(stringLabel.toString()));
+            container.add(new Label(parametersList));
         }
         setTitle("Constructors List");
         setSize(200, 150);
