@@ -12,6 +12,18 @@ public class ObjectManager {
     // Creator が作ったオブジェクトを保持する．
     private final Map<String, Optional> objectStore;
     private final List<String> objectNames;
+    private final Map<String,Class> builtInMap = new HashMap<String,Class>();{
+       builtInMap.put("int", Integer.TYPE );
+       builtInMap.put("long", Long.TYPE );
+       builtInMap.put("double", Double.TYPE );
+       builtInMap.put("float", Float.TYPE );
+       builtInMap.put("bool", Boolean.TYPE );
+       builtInMap.put("char", Character.TYPE );
+       builtInMap.put("byte", Byte.TYPE );
+       builtInMap.put("void", Void.TYPE );
+       builtInMap.put("short", Short.TYPE );
+    }
+
 
     ObjectManager() {
         objectStore = new HashMap<>();
@@ -269,6 +281,10 @@ public class ObjectManager {
         List<Class<?>> types = new ArrayList<>();
         for (String parameterTypesAsString : parameterTypesAsStringList) {
             try {
+                if (builtInMap.containsKey(parameterTypesAsString)) {
+                    types.add(builtInMap.get(parameterTypesAsString));
+                    continue;
+                }
                 types.add(Class.forName(parameterTypesAsString));
             } catch (final ClassNotFoundException e) {
                 e.printStackTrace();
