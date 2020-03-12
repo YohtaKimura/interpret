@@ -103,7 +103,7 @@ public class OMInvokeMethodView  extends JDialog implements ActionListener {
         }
         if (Objects.equals(command[0], "InputDirectly")) {
             final String parameterName = command[1];
-            new DirectlySetterForParameterView(this, parametersMap, parameterName, parameterTypeMap.get(parameterName));
+            new DirectlySetterForParameterView(this, this.objectManager, parametersMap, parameterName, parameterTypeMap.get(parameterName));
             System.out.println("DirectInputView"); //TODO: implement
             return;
         };

@@ -293,6 +293,21 @@ public class ObjectManager {
         return types;
     }
 
+    public Optional<Class<?>> getType(String parameterTypeAsString) {
+        final Class<?> type;
+            try {
+                if (builtInMap.containsKey(parameterTypeAsString)) {
+                    type = builtInMap.get(parameterTypeAsString);
+                } else {
+                    type = Class.forName(parameterTypeAsString);
+                }
+                return Optional.of(type);
+            } catch (final ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+            return Optional.empty();
+    }
+
     List<String> getNames() {
         return objectNames;
     }

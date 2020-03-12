@@ -1,5 +1,7 @@
 package interpret;
 
+import org.graalvm.compiler.nodes.calc.IntegerTestNode;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -8,13 +10,15 @@ import java.util.Map;
 import java.util.Objects;
 
 public class DirectlySetterForParameterView extends JDialog implements ActionListener {
+    private final ObjectManager objectManager;
     private final String fieldName;
     private JTextField valuableField;
     private final String parameterType;
     private final Map<String, Object> parametersMap;
 
-    DirectlySetterForParameterView(JDialog owner, final Map<String, Object> parametersMap, final String parameterName, final String parameterType) {
+    DirectlySetterForParameterView(JDialog owner, final ObjectManager objectManager, final Map<String, Object> parametersMap, final String parameterName, final String parameterType) {
         super(owner);
+        this.objectManager = objectManager;
         this.fieldName = parameterName;
         this.parameterType = parameterType;
         this.parametersMap = parametersMap;
@@ -40,13 +44,28 @@ public class DirectlySetterForParameterView extends JDialog implements ActionLis
     public void actionPerformed(ActionEvent e) {
         System.out.println(valuableField);
         String newValueText = valuableField.getText();
+        Class<?> parameterClass = this.objectManager.getType(parameterType).get();
+        System.out.println(parameterClass);
+
         if (Objects.equals(parameterType, String.class.getName())) {
-            parametersMap.put(fieldName, valuableField.getText());
+            parametersMap.put(fieldName, newValueText);
             JOptionPane.showMessageDialog(
                     null,
                     "Input " + valuableField.getText() + "! Close this window and return previous.");
             return;
         }
+
+        if (Objects.equals(parameterClass, int.class)) {
+            System.out.println(fieldName);
+            parametersMap.put(fieldName, Integer.parseInt(newValueText));
+                        JOptionPane.showMessageDialog(
+                    null,
+                    "Input " + valuableField.getText() + "! Close this window and return previous.");
+            return;
+        }
+
+        System.out.println("fail");
+        return;
 // TODO: care primitives
 //        if (Objects.equals(parameterType, String.class.getName())) {
 //            objectManager.setPrimitiveIntValueDirectly(o, fieldName, newValueText);

@@ -86,6 +86,7 @@ public class ConstructorView extends JDialog implements ActionListener {
                     "Generate!");
             final List<Object> parameterList = new ArrayList<>();
             for (String parameterName: this.parameterNameList) {
+                System.out.println(parameterName);
                 parameterList.add(parametersMap.get(parameterName));
             }
             System.out.println(valuableNameField.getText());
@@ -102,7 +103,7 @@ public class ConstructorView extends JDialog implements ActionListener {
         }
         if (Objects.equals(command[0], "InputDirectly")) {
             final String parameterName = command[1];
-            new DirectlySetterForParameterView(this, parametersMap, parameterName, parameterTypeMap.get(parameterName));
+            new DirectlySetterForParameterView(this, this.objectManager, parametersMap, parameterName, parameterTypeMap.get(parameterName));
             System.out.println("DirectInputView"); //TODO: implement
             return;
         };
