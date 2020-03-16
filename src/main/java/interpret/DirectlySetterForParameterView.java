@@ -64,6 +64,15 @@ public class DirectlySetterForParameterView extends JDialog implements ActionLis
             return;
         }
 
+        if (Objects.equals(parameterClass, boolean.class)) {
+            System.out.println(fieldName);
+            parametersMap.put(fieldName, Boolean.parseBoolean(newValueText));
+                        JOptionPane.showMessageDialog(
+                    null,
+                    "Input " + valuableField.getText() + "! Close this window and return previous.");
+            return;
+        }
+        
         System.out.println("fail");
         return;
 // TODO: care primitives
