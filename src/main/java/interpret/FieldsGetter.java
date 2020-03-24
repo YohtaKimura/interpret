@@ -8,7 +8,7 @@ import java.util.Optional;
 public class FieldsGetter {
     static Optional<Field[]> getFields(final Object o) {
         if(Objects.nonNull(o)) {
-            return Optional.of(o.getClass().getFields());
+            return Optional.of(o.getClass().getDeclaredFields());
         }
         return Optional.empty();
     }
@@ -16,7 +16,7 @@ public class FieldsGetter {
     static Optional<Field> getFieldByName(final Object o, final String name) {
         try {
             if(Objects.nonNull(o)) {
-                return Optional.of(o.getClass().getField(name));
+                return Optional.of(o.getClass().getDeclaredField(name));
             }
         } catch (final NoSuchFieldException e) {
             e.printStackTrace();

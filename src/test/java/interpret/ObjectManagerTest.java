@@ -20,9 +20,9 @@ public class ObjectManagerTest {
     @Test
     public void testGetNameByName() throws Exception {
         ObjectManager objectManager = new ObjectManager();
-        objectManager.createAndSave("interpret.ForTestNotProduct");
-        Optional o = objectManager.getNameByName("interpret.ForTestNotProduct");
-        Assert.assertEquals("interpret.ForTestNotProduct", o.get());
+        objectManager.createAndSave("interpret.ForTestNotProduct", "a");
+        Optional o = objectManager.getNameByName("a");
+        Assert.assertEquals("a", o.get());
     }
 
     @Test
