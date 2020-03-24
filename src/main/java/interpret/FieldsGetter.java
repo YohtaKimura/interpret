@@ -13,6 +13,13 @@ public class FieldsGetter {
         return Optional.empty();
     }
 
+    static Optional<Field[]> setAccessible(final Field[] fields) {
+        for (final Field field: fields) {
+            field.setAccessible(true);
+        }
+        return Optional.of(fields);
+    }
+
     static Optional<Field> getFieldByName(final Object o, final String name) {
         try {
             if(Objects.nonNull(o)) {

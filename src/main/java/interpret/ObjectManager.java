@@ -67,7 +67,7 @@ public class ObjectManager {
 
 
     Optional<Field[]> getFields(final Object o) {
-        return FieldsGetter.getFields(o);
+        return FieldsGetter.setAccessible(FieldsGetter.getFields(o).get());
     }
 
 
