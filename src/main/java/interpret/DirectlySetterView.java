@@ -40,9 +40,11 @@ public class DirectlySetterView extends JDialog implements ActionListener {
         String newValueText = valuableField.getText();
         if (objectManager.isString(o, fieldName)) {
             objectManager.setStringValueDirectly(o, fieldName, newValueText);
+            return;
         }
         if (objectManager.isPrimitive(o, fieldName)) {
             objectManager.setPrimitiveIntValueDirectly(o, fieldName, newValueText);
+            return;
         }
 
         // TODO: care other primitive

@@ -1,9 +1,6 @@
 package interpret;
 
-import java.lang.reflect.Constructor;
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
-import java.lang.reflect.Type;
+import java.lang.reflect.*;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -231,6 +228,20 @@ public class ObjectManager {
     Optional<Object> setPrimitiveIntValueDirectly(final Object o, final String previousValuableName, final String newValue) {
         Field previousField = FieldsGetter.getFieldByName(o, previousValuableName).get();
         Optional<Object> previousValue = getFieldValueByName(o, previousValuableName);
+        int modifiers = previousField.getModifiers();
+        try {
+            if (Modifier.isPrivate(modifiers) && Modifier.isFinal(modifiers)) { // https://stackoverflow.com/questions/3301635/change-private-static-final-field-using-java-reflection/31268945#31268945
+                Field modifiersField = Field.class.getDeclaredField("modifiers");
+                modifiersField.setAccessible(true);
+                int modifier = previousField.getModifiers() & ~Modifier.FINAL & ~Modifier.PRIVATE;
+                System.out.println(modifier);
+                modifiersField.setInt(previousField, modifier);
+                previousField.set(o, Integer.parseInt(newValue));
+                return previousValue;
+            }
+        } catch (final IllegalAccessException | NoSuchFieldException e) {
+            e.printStackTrace();
+        }
         try {
             previousField.setInt(o, Integer.parseInt(newValue));
         } catch (final IllegalAccessException e) {

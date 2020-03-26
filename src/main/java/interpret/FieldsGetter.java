@@ -23,7 +23,7 @@ public class FieldsGetter {
     static Optional<Field> getFieldByName(final Object o, final String name) {
         try {
             if(Objects.nonNull(o)) {
-                return Optional.of(o.getClass().getDeclaredField(name));
+                return setAccessible(o.getClass().getDeclaredField(name));
             }
         } catch (final NoSuchFieldException e) {
             e.printStackTrace();
@@ -31,4 +31,10 @@ public class FieldsGetter {
         }
         return Optional.empty();
     }
+
+    static Optional<Field> setAccessible(final Field field) {
+        field.setAccessible(true);
+        return Optional.of(field);
+    }
+
 }
