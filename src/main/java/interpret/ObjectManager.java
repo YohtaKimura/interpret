@@ -191,12 +191,17 @@ public class ObjectManager {
         return TypeGetter.getType(targetField);
     }
 
+    Class getClass(final Object o, final String field) {
+        Field targetField = Arrays.stream(getFields(o).get()).filter(f -> Objects.equals(f.getName(), field)).findFirst().get();
+        return targetField.getType();
+    }
 
     List<String> getObjectNamesAlreadyExistByObjectFieldType(final Object o, final String field) {
-        final String type = getTypeAsString(o, field).get();
+        final Class clazz = getClass(o, field);
         final List objectNamesAlreadyExistByObjectFieldType = new ArrayList();
         for (String key : objectStore.keySet()) {
-            if (Objects.equals(objectStore.get(key).get().getClass().getTypeName(), type)) {
+            Class a = objectStore.get(key).get().getClass();
+            if (clazz.isAssignableFrom(objectStore.get(key).get().getClass())) {
                 objectNamesAlreadyExistByObjectFieldType.add(key);
             }
         }
