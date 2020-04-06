@@ -61,7 +61,7 @@ public class OMInvokeMethodView  extends JDialog implements ActionListener {
 
         for (String parameterName: parameterNameList) {
             container.add(new JLabel("class: " + this.parameterTypeMap.get(parameterName) + ", name: " +parameterName));
-            List<String> valuableList = objectManager.getObjectNamesAlreadyExistByObjectFieldType(o, parameterName);
+            List<String> valuableList = objectManager.getObjectNamesAlreadyExistByParameterType(this.parameterTypeMap.get(parameterName));
 //            java.util.List<String> valuableList = Collections.EMPTY_LIST;
             this.valuableListsMap.put(parameterName, valuableList);
             java.util.List<String> messageList = valuableList.stream().map(val -> val + ": " + this.objectManager.getObjectByName(val).get().toString()).collect(Collectors.toList());

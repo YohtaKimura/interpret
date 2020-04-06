@@ -46,6 +46,35 @@ public class ObjectManagerTest {
     }
 
     @Test
+    public void testGetObjectNamesAlreadyExistByMethodParameterType() throws Exception {
+        ObjectManager objectManager = new ObjectManager();
+        objectManager.createAndSave("java.lang.String", "hey");
+        objectManager.createAndSave("java.lang.String", "hoge");
+        objectManager.createAndSave("interpret.ForTestNotProduct", "target");
+        Object o = objectManager.getObjectByName("target").get();
+
+        List<String> nameList = objectManager.getObjectNamesAlreadyExistByParameterType("java.lang.String");
+        // nameList.stream().forEach(e -> System.out.println(e));
+        Assert.assertEquals("hoge", nameList.get(0));
+        Assert.assertEquals("hey", nameList.get(1));
+    }
+
+    @Test
+    public void test2GetObjectNamesAlreadyExistByMethodParameterType() throws Exception {
+        ObjectManager objectManager = new ObjectManager();
+        objectManager.createAndSave("java.lang.String", "hey");
+        objectManager.createAndSave("java.lang.String", "hoge");
+        objectManager.createAndSave("interpret.ForTestNotProduct", "target");
+        Object o = objectManager.getObjectByName("target").get();
+
+        List<String> nameList = objectManager.getObjectNamesAlreadyExistByParameterType("java.lang.Object");
+        // nameList.stream().forEach(e -> System.out.println(e));
+        Assert.assertEquals("hoge", nameList.get(0));
+        Assert.assertEquals("hey", nameList.get(1));
+    }
+
+
+    @Test
     public void testSetValue() throws Exception {
         ObjectManager objectManager = new ObjectManager();
         objectManager.createAndSave("java.lang.String", "hey");

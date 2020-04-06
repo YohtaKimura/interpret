@@ -15,4 +15,8 @@ public class ForTestNotProduct {
     public void Hello() {
         System.out.println("Hello");
     }
+    public void print(final String str, final Integer i) {
+        System.out.println(str);
+        System.out.println(i);
+    }
 }

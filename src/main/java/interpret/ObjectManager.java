@@ -196,8 +196,33 @@ public class ObjectManager {
         return targetField.getType();
     }
 
-    List<String> getObjectNamesAlreadyExistByObjectFieldType(final Object o, final String field) {
+    Class getClass(final Method m, final Class clazz) {
+        Parameter[] ps = m.getParameters();
+        return Arrays.stream(m.getParameters()).filter(p -> p.getClass().isAssignableFrom(clazz)).findFirst().getClass();
+    }
+
+    List<String> getObjectNamesAlreadyExistByObjectFieldType (final Object o, final String field) {
         final Class clazz = getClass(o, field);
+        final List objectNamesAlreadyExistByObjectFieldType = new ArrayList();
+        for (String key : objectStore.keySet()) {
+            if (clazz.isAssignableFrom(objectStore.get(key).get().getClass())) {
+                objectNamesAlreadyExistByObjectFieldType.add(key);
+            }
+        }
+        return objectNamesAlreadyExistByObjectFieldType;
+    }
+
+    Method getMethod(final Object o, final String methodName, final Class ... classes) {
+        try {
+            return o.getClass().getDeclaredMethod(methodName, null);
+        } catch (final NoSuchMethodException e ) {
+            e.printStackTrace();
+        }
+        // this is shit. use optional.
+        return null;
+    }
+    List<String> getObjectNamesAlreadyExistByParameterType (final String typeAsString) {
+        final Class clazz = ClassGetter.getClass(typeAsString);
         final List objectNamesAlreadyExistByObjectFieldType = new ArrayList();
         for (String key : objectStore.keySet()) {
             Class a = objectStore.get(key).get().getClass();
