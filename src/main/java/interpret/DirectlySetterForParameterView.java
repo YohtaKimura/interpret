@@ -47,7 +47,7 @@ public class DirectlySetterForParameterView extends JDialog implements ActionLis
         Class<?> parameterClass = this.objectManager.getType(parameterType).get();
         System.out.println(parameterClass);
 
-        if (Objects.equals(parameterType, String.class.getName())) {
+        if (parameterClass.isAssignableFrom(String.class)) {
             parametersMap.put(fieldName, newValueText);
             JOptionPane.showMessageDialog(
                     null,

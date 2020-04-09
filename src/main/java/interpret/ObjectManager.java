@@ -140,7 +140,7 @@ public class ObjectManager {
         return firstMethodFoundByName;
     }
 
-    void invokeMethodByNameWithArgs(final Object o, final Method name, final Object ... args) {
+    void invokeVoidMethodByNameWithArgs(final Object o, final Method name, final Object ... args) {
         final Method[] methods = MethodsGetter.getMethods(o).get();
         final List<Method> methodsList = Arrays.asList(methods);
         if (Objects.isNull(name)) {
@@ -149,6 +149,16 @@ public class ObjectManager {
         }
         final Method firstMethodFoundByName = methodsList.stream().filter(m -> Objects.equals(m.getName(), name.getName())).findFirst().get();
         MethodInvoker.voidAndPublicMethodInvoke(o, firstMethodFoundByName, args);
+    }
+
+    Optional<Object> invokeMethodByNameWithArgs(final Object o, final Method name, final Object ... args) {
+        final Method[] methods = MethodsGetter.getMethods(o).get();
+        final List<Method> methodsList = Arrays.asList(methods);
+        if (Objects.isNull(name)) {
+            return MethodInvoker.PublicMethodInvoke(o, methodsList.get(0), args);
+        }
+        final Method firstMethodFoundByName = methodsList.stream().filter(m -> Objects.equals(m.getName(), name.getName())).findFirst().get();
+        return MethodInvoker.PublicMethodInvoke(o, firstMethodFoundByName, args);
     }
 
     void invokeConstructorWithNoArgsAndSave(Constructor constructor, String valuableName) {
