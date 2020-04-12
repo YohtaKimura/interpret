@@ -14,6 +14,7 @@ public class ObjectManager {
        builtInMap.put("long", Long.TYPE );
        builtInMap.put("double", Double.TYPE );
        builtInMap.put("float", Float.TYPE );
+       builtInMap.put("boolean", Boolean.TYPE);
        builtInMap.put("bool", Boolean.TYPE );
        builtInMap.put("char", Character.TYPE );
        builtInMap.put("byte", Byte.TYPE );
@@ -232,7 +233,12 @@ public class ObjectManager {
         return null;
     }
     List<String> getObjectNamesAlreadyExistByParameterType (final String typeAsString) {
-        final Class clazz = ClassGetter.getClass(typeAsString);
+        final Class clazz;
+        if (builtInMap.containsKey(typeAsString)) {
+            clazz = builtInMap.get(typeAsString);
+        } else {
+            clazz = ClassGetter.getClass(typeAsString);
+        }
         final List objectNamesAlreadyExistByObjectFieldType = new ArrayList();
         for (String key : objectStore.keySet()) {
             Class a = objectStore.get(key).get().getClass();
