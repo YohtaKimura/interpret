@@ -236,6 +236,9 @@ public class ObjectManager {
         final Class clazz;
         if (builtInMap.containsKey(typeAsString)) {
             clazz = builtInMap.get(typeAsString);
+        } else if (typeAsString.endsWith("[]")) {
+            // care for array
+            clazz = ClassGetter.getClass("[L" + typeAsString.replace("[]", "") + ";");
         } else {
             clazz = ClassGetter.getClass(typeAsString);
         }

@@ -80,8 +80,6 @@ public class ObjectManagerDialogView extends JDialog implements Runnable, Action
         }
         Field[] fields = objectManager.getFields(o).get();
         Method[] methods = objectManager.getMethods(o).get();
-        System.out.println(fields[0]);
-        System.out.println(methods[0]);
         new OMMemberView(this, objectManager, o);
     }
 }
