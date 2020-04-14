@@ -34,14 +34,13 @@ public class OMMethodsView extends JDialog implements ActionListener {
         this.methodNamesList = objectManager.getMethodNamesList(o).get();
         this.panel = new JPanel();
         this.scrollPane = new JScrollPane();
-        this.panel.setLayout(new GridLayout(methodNamesList.size(), 0));
+        this.panel.setLayout(new GridLayout(0, methodNamesList.size()));
         this.searchField = new JTextField();
+        this.panel.setLayout(new GridLayout(methodNamesList.size(), 2));
+        this.panel.add(new JLabel("Search method of ", SwingConstants.LEFT));
+        this.panel.add(searchField);
 
-        JPanel panel = new JPanel();
-        panel.setLayout(new GridLayout(3, 2));
-        panel.add(new JLabel("Search method of ", SwingConstants.LEFT));
-        panel.add(searchField);
-
+        this.panel.add(new JLabel("Search button: ", SwingConstants.LEFT));
         final JButton searchButton = new JButton("Search");
         searchButton.setPreferredSize(new Dimension(100, 30));
         searchButton.setMinimumSize(new Dimension(100, 30));
@@ -75,6 +74,7 @@ public class OMMethodsView extends JDialog implements ActionListener {
             btn.setActionCommand("Method " + methodName);
             btn.addActionListener(this);
             panel.add(btn);
+//            this.panel.add(new JLabel("Return value type: , Arguments: ,", SwingConstants.LEFT));
         }
     }
 
