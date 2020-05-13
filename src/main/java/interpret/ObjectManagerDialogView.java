@@ -74,7 +74,6 @@ public class ObjectManagerDialogView extends JDialog implements Runnable, Action
         System.out.println(objectManager.getObjectByName(name).get().getClass());
         Object o = objectManager.getObjectByName(name).get();
         if (objectManager.isArray(o)) {
-            System.out.println("Hello");
             new OMArrayView(this, objectManager, o);
             return; // TODO: implement OMMemberView for array
         }

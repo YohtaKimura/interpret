@@ -14,18 +14,13 @@ public class ConstructorsGetter {
         return Optional.empty();
     }
 
-    static Optional<Constructor[]> getConstructors(final String objectName) {
+    static Optional<Constructor[]> getConstructors(final String objectName) throws ClassNotFoundException {
         if(Objects.nonNull(objectName)) {
-            try {
-                return Optional.of(Class.forName(objectName).getConstructors());
-            } catch (final ClassNotFoundException e) {
-                System.out.println(objectName + " cannot be found.");
-                e.printStackTrace();
-                return Optional.empty();
-            }
+            return Optional.of(Class.forName(objectName).getConstructors());
         }
-        return Optional.empty();
+        throw new ClassNotFoundException("null is input as class name");
     }
+
 
     static Optional<Constructor> getFirstConstructorFromCtors(final Object o) {
         if(Objects.nonNull(o)) {
@@ -35,22 +30,15 @@ public class ConstructorsGetter {
     }
 
 
-    static Optional<Constructor> getFirstConstructorFromCtors(final String objectName) {
+    static Optional<Constructor> getFirstConstructorFromCtors(final String objectName) throws ClassNotFoundException{
         if(Objects.nonNull(objectName)) {
-            try {
                 return Optional.of(Class.forName(objectName).getConstructors()[0]);
-            } catch (final ClassNotFoundException e) {
-                System.out.println(objectName + " cannot be found.");
-                e.printStackTrace();
-                return Optional.empty();
-            }
         }
-        return Optional.empty();
+        throw new ClassNotFoundException("null is input as class name");
     }
 
-    static Optional<Constructor> getConstructorByParameterTypes(final String objectName, final Class... types) {
+    static Optional<Constructor> getConstructorByParameterTypes(final String objectName, final Class... types) throws ClassNotFoundException {
         // Reference: https://docs.oracle.com/javase/tutorial/reflect/member/ctorLocation.html
-        try {
             final Constructor[] allConstructors = Class.forName(objectName).getConstructors(); // If you need all constructors, use getDeclaredConstructors method. See https://stackoverflow.com/questions/8249173/what-is-the-difference-between-getdeclaredconstructors-and-getconstructors-in-th .
             for (Constructor constructor : allConstructors) {
                 Class<?>[] pTypes = constructor.getParameterTypes();
@@ -67,9 +55,6 @@ public class ConstructorsGetter {
                     return Optional.of(constructor);
                 }
             }
-        } catch (final ClassNotFoundException e) {
-            e.printStackTrace();
-        }
         return Optional.empty();
     }
 

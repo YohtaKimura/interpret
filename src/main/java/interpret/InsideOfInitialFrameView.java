@@ -47,6 +47,12 @@ public class InsideOfInitialFrameView extends JFrame implements ActionListener {
     }
 
     void printToDialog(Object object) {
+        if (Objects.isNull(object)) {
+               JOptionPane.showMessageDialog(
+                       null,
+                       "null");
+               return;
+        }
         JOptionPane.showMessageDialog(
                 null,
                 object.toString());
@@ -60,13 +66,20 @@ public class InsideOfInitialFrameView extends JFrame implements ActionListener {
             JOptionPane.showMessageDialog(
                     null,
                     objectName + " array is what you want");
-            objectManager.createOneElementArrayAndSave(objectName,valuableNameField.getText()); // TODO: multiple element
+            //objectManager.createOneElementArrayAndSave(objectName,valuableNameField.getText()); // TODO: multiple element
+            new ArrayCreatorView(objectManager, objectNameField.getText(), valuableNameField.getText());
         }
         if (!objectName.endsWith("[]") && Objects.equals(buttonName, "Generate")) {
             JOptionPane.showMessageDialog(
                     null,
                     objectName + " is what you input.");
-            objectManager.createAndSave(objectNameField.getText(), valuableNameField.getText());
+            try {
+                objectManager.createAndSave(objectNameField.getText(), valuableNameField.getText());
+            } catch (final ClassNotFoundException | NoSuchMethodException er) {
+                ErrorHandleDialogView.showCause(er);
+                return;
+            }
+
             Optional o = objectManager.getObjectByName(valuableNameField.getText());
             printToDialog(o.orElse(null));
         }

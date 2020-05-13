@@ -16,19 +16,22 @@ import java.util.stream.Collectors;
 public class ConstructorsListView extends JDialog implements ActionListener {
     private final String objectName;
     private final String valuableName;
-    private final List<Constructor> constructorList;
-    private final List<String> constructorNameList;
+    private List<Constructor> constructorList;
+    private List<String> constructorNameList;
     private final ObjectManager objectManager;
-    ConstructorsListView(JDialog owner, final ObjectManager objectManager, final String objectName) {
-        this(owner, objectManager, objectName, null);
-    }
 
-        ConstructorsListView(JDialog owner, final ObjectManager objectManager, final String objectName, final String valuableName) {
+    ConstructorsListView(JDialog owner, final ObjectManager objectManager, final String objectName, final String valuableName) {
         super(owner);
         this.objectManager = objectManager;
         this.objectName = objectName;
         this.valuableName = valuableName;
-        this.constructorList = objectManager.getConstructors(objectName).get();
+        try {
+            this.constructorList = objectManager.getConstructors(objectName).get();
+        } catch (final ClassNotFoundException er) {
+            ErrorHandleDialogView.showCause(er);
+            return;
+        }
+
         this.constructorNameList = constructorList.stream().map(c -> c.getName()).collect(Collectors.toList());
 //        this.constructorNameList.stream().forEach(name -> System.out.println(name));
 // TODO: make container of parameters

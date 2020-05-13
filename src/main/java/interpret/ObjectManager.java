@@ -28,12 +28,12 @@ public class ObjectManager {
         objectNames = new ArrayList<>();
     }
 
-    void createAndSave(final String objectName) { // Need refactor.
+    void createAndSave(final String objectName) throws NoSuchMethodException, ClassNotFoundException { // Need refactor.
         Optional o = ObjectCreator.createInstanceByNoArgument(objectName);
         objectStore.put(objectName, o);
     }
 
-    void createAndSave(final String objectName, final String valuableName) {
+    void createAndSave(final String objectName, final String valuableName) throws NoSuchMethodException, ClassNotFoundException {
         if (Objects.isNull(valuableName)) {
             createAndSave(objectName);
         }
@@ -55,11 +55,11 @@ public class ObjectManager {
         return Optional.empty();
     }
 
-    Optional<List<Constructor>> getConstructors(final String objectName) {
+    Optional<List<Constructor>> getConstructors(final String objectName) throws ClassNotFoundException {
         return Optional.of(Arrays.asList(ConstructorsGetter.getConstructors(objectName).get()));
     }
 
-    Optional<Constructor> getFirstConstructor(final String objectName) {
+    Optional<Constructor> getFirstConstructor(final String objectName) throws ClassNotFoundException {
         return ConstructorsGetter.getFirstConstructorFromCtors(objectName);
     }
 
@@ -172,13 +172,13 @@ public class ObjectManager {
         this.objectStore.put(valuableName, ConstructorInvoker.getNewInstance(constructor, args));
     }
 
-    void createOneElementArrayAndSave(final String className, final String valuableName) {
+    void createOneElementArrayAndSave(final String className, final String valuableName) throws ClassNotFoundException {
         String replacedClassName = className.replace("[]","");
         this.objectNames.add(valuableName);
         this.objectStore.put(valuableName, ArrayCreator.createArray(replacedClassName, 1));
     }
 
-    void createArrayAndSave(final String className, final String valuableName, final int length) {
+    void createArrayAndSave(final String className, final String valuableName, final int length) throws ClassNotFoundException {
         String replacedClassName = className.replace("[]","");
         this.objectNames.add(valuableName);
         this.objectStore.put(valuableName, ArrayCreator.createArray(replacedClassName, length));
@@ -309,7 +309,7 @@ public class ObjectManager {
         return field.getType().isPrimitive();
     }
 
-    Optional<Constructor> getConstructor(final String objectName, final String ... parameterTypes) {
+    Optional<Constructor> getConstructor(final String objectName, final String ... parameterTypes) throws ClassNotFoundException {
         List<String> parameterTypesAsStringList = Arrays.asList(parameterTypes);
         List<Class<?>> types = getTypes(parameterTypesAsStringList);
         return Optional.of(ConstructorsGetter.getConstructorByParameterTypes(objectName, types.toArray(new Class<?>[types.size()])).get());
@@ -319,14 +319,14 @@ public class ObjectManager {
         return Optional.of(Arrays.asList(constructor.getParameters()).stream().map(p -> p.getName()).collect(Collectors.toList()));
     }
 
-    Optional<List<String>> getParameterNameListOfConstructor(final String objectName, final String ... parameterTypes) {
+    Optional<List<String>> getParameterNameListOfConstructor(final String objectName, final String ... parameterTypes) throws ClassNotFoundException {
         List<String> parameterTypesAsStringList = Arrays.asList(parameterTypes);
         List<Class<?>> types = getTypes(parameterTypesAsStringList);
         return getParameterNameListOfConstructor(ConstructorsGetter.getConstructorByParameterTypes(objectName, types.toArray(new Class<?>[types.size()])).get());
     }
 
 
-    Optional<Map<String, String>> getParameterTypeMapOfConstructor(final String objectName, final String ... parameterTypes) {
+    Optional<Map<String, String>> getParameterTypeMapOfConstructor(final String objectName, final String ... parameterTypes) throws ClassNotFoundException {
         List<String> parameterTypesAsStringList = Arrays.asList(parameterTypes);
         List<Class<?>> types = getTypes(parameterTypesAsStringList);
         List<String> parameterNameListOfConstructor = getParameterNameListOfConstructor(ConstructorsGetter.getConstructorByParameterTypes(objectName, types.toArray(new Class<?>[types.size()])).get()).get();

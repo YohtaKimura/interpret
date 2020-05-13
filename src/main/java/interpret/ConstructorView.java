@@ -13,12 +13,12 @@ public class ConstructorView extends JDialog implements ActionListener {
     private JDialog owner;
     private JTextField valuableNameField;
     private final ObjectManager objectManager;
-    private final List<String> parameterNameList;
+    private List<String> parameterNameList;
     private final Map<String, JComboBox> jComboBoxMap;
     private final Map<String, List<String>> valuableListsMap;
-    private final Map<String, String> parameterTypeMap;
+    private Map<String, String> parameterTypeMap;
     private final Map<String, Object> parametersMap;
-    private final Constructor constructor;
+    private Constructor constructor;
 
 
     ConstructorView(final JDialog owner, final ObjectManager objectManager, final String objectName, final String valuableName, final String parameterTypes) {
@@ -26,11 +26,26 @@ public class ConstructorView extends JDialog implements ActionListener {
         this.objectManager = objectManager;
         this.jComboBoxMap = new HashMap<>();
         this.valuableListsMap = new HashMap<>();
-        final String[] parameterTypesArray = parameterTypes.split(",");
-        this.parameterNameList = this.objectManager.getParameterNameListOfConstructor(objectName, parameterTypesArray).get();
         this.parametersMap = new HashMap<>();
-        this.parameterTypeMap = this.objectManager.getParameterTypeMapOfConstructor(objectName, parameterTypesArray).get();
-        this.constructor = objectManager.getConstructor(objectName, parameterTypes.split(",")).get();
+        final String[] parameterTypesArray = parameterTypes.split(",");
+        try {
+            this.parameterTypeMap = this.objectManager.getParameterTypeMapOfConstructor(objectName, parameterTypesArray).get();
+        } catch (final ClassNotFoundException er) {
+            ErrorHandleDialogView.showCause(er);
+        }
+        try {
+            this.parameterNameList = this.objectManager.getParameterNameListOfConstructor(objectName, parameterTypesArray).get();
+        } catch (final ClassNotFoundException err) {
+            ErrorHandleDialogView.showCause(err);
+            return;
+        }
+
+        try {
+            this.constructor = objectManager.getConstructor(objectName, parameterTypes.split(",")).get();
+        } catch (final ClassNotFoundException er) {
+            ErrorHandleDialogView.showCause(er);
+            return;
+        }
 
         setTitle("Generator");
         setSize(300, 200);

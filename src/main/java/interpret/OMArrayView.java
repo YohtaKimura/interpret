@@ -15,6 +15,7 @@ public class OMArrayView extends JDialog implements ActionListener {
         this.o = o;
         this.indexField = new JTextField();
         add(new JLabel("Index of " + o.getClass().getName(), SwingConstants.LEFT));
+        add(new JLabel("Array size:  " + o.getClass().cast(o), SwingConstants.LEFT));
         add(indexField);
         getContentPane().setLayout(new GridLayout(3, 2));
         JButton btn = new JButton("Look into");
