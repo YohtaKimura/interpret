@@ -57,10 +57,16 @@ public class DirectlySetterForParameterView extends JDialog implements ActionLis
 
         if (Objects.equals(parameterClass, int.class)) {
             System.out.println(fieldName);
-            parametersMap.put(fieldName, Integer.parseInt(newValueText));
-                        JOptionPane.showMessageDialog(
+            try {
+                parametersMap.put(fieldName, Integer.parseInt(newValueText));
+                JOptionPane.showMessageDialog(
+                        null,
+                        "Input " + valuableField.getText() + "! Close this window and return previous.");
+            } catch (NumberFormatException ne ){
+            JOptionPane.showMessageDialog(
                     null,
-                    "Input " + valuableField.getText() + "! Close this window and return previous.");
+                    ne.getMessage());
+            }
             return;
         }
 
