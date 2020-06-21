@@ -106,7 +106,11 @@ public class ConstructorView extends JDialog implements ActionListener {
             }
             System.out.println(valuableNameField.getText());
             System.out.println(this.constructor);
-            objectManager.invokeConstructorAndSave(this.constructor, valuableNameField.getText(), parameterList.toArray());
+            try {
+                objectManager.invokeConstructorAndSave(this.constructor, valuableNameField.getText(), parameterList.toArray());
+            } catch (Exception er) {
+                ErrorHandleDialogView.showCause(er);
+            }
             return;
         }
         if (Objects.equals(command[0], "Change")) {

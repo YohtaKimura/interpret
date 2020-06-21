@@ -13,6 +13,7 @@ public class OMInvokeMethodView  extends JDialog implements ActionListener {
     private JDialog owner;
     private final ObjectManager objectManager;
     private final Object o;
+    private final Map<String, Method> methodNameAndParamStringMethodMap;
     private final java.util.List<String> parameterNameList;
     private final Map<String, JComboBox> jComboBoxMap;
     private final Map<String, java.util.List<String>> valuableListsMap;
@@ -22,15 +23,16 @@ public class OMInvokeMethodView  extends JDialog implements ActionListener {
     private final Method method;
 
 
-    OMInvokeMethodView(final JDialog owner, final ObjectManager objectManager, final Object o, final String methodName) {
+    OMInvokeMethodView(final JDialog owner, final ObjectManager objectManager, final Object o, final String methodNameAndParamString) {
         this.owner = owner;
         this.objectManager = objectManager;
         this.o = o;
-        this.methodName = methodName;
-        this.method = objectManager.getFirstMethodFoundByName(o, methodName);
+        this.methodName = methodNameAndParamString;
+        this.methodNameAndParamStringMethodMap = objectManager.getMethodNameAndParamStringMethodsMap(o).get();
+        this.method = methodNameAndParamStringMethodMap.get(methodNameAndParamString);
         this.jComboBoxMap = new HashMap<>();
         this.valuableListsMap = new HashMap<>();
-        this.parameterNameList = this.objectManager.getMethodParameterNameList(o, methodName).get();
+        this.parameterNameList = Arrays.stream(this.method.getParameters()).map(p -> p.getName()).collect(Collectors.toList());
         this.parametersMap = new HashMap<>();
         this.parameterTypeMap = this.objectManager.getParameterTypeMapOfMethod(method).get();
 
@@ -91,7 +93,13 @@ public class OMInvokeMethodView  extends JDialog implements ActionListener {
                 parameterList.add(parametersMap.get(parameterName));
             }
             System.out.println("method type: " + this.method);
-            Object retVal = objectManager.invokeMethodByNameWithArgs(this.o, this.method, parameterList.toArray()).get();
+
+            Object retVal;
+            if (parameterList.isEmpty()) {
+                retVal = objectManager.invokeMethodWithNoArgs(this.o, this.method).get();
+            } else {
+                retVal = objectManager.invokeMethodWithArgs(this.o, this.method, parameterList.toArray()).get();
+            }
             JOptionPane.showMessageDialog(
                     null,
                     "method value: " + retVal.toString());

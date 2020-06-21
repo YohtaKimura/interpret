@@ -37,6 +37,10 @@ public class InvokeConstructorView extends JDialog implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         System.out.println(valuableNameField);
         System.out.println(constructor);
-        objectManager.invokeConstructorWithNoArgsAndSave(constructor, valuableNameField.getText());
+        try {
+            objectManager.invokeConstructorWithNoArgsAndSave(constructor, valuableNameField.getText());
+        } catch (Exception er) {
+            ErrorHandleDialogView.showCause(er);
+        }
     }
 }

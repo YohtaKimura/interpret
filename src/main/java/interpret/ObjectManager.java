@@ -1,5 +1,6 @@
 package interpret;
 
+import javax.swing.text.html.Option;
 import java.lang.reflect.*;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -102,6 +103,48 @@ public class ObjectManager {
         return MethodsGetter.getMethods(o);
     }
 
+    Optional<Map<Method, List<Parameter>>> getMethodsParamListMap(final Object o) {
+        Method[] methods = getMethods(o).get();
+        Map<Method, List<Parameter>> methodsParamListMap = new HashMap<>();
+        Arrays.stream(methods).forEach(me -> {
+            System.out.println(me.getName());
+            List plis = Arrays.stream(me.getParameters()).map(p -> p.getType().getName()).collect(Collectors.toList());
+            methodsParamListMap.put(me, plis);
+        });
+        return Optional.of(methodsParamListMap);
+    }
+
+    Optional<Map<Method, String>> getMethodsParamStringMap(final Object o) {
+        Method[] methods = getMethods(o).get();
+        Map<Method, String> methodsParamListMap = new HashMap<>();
+        Arrays.stream(methods).forEach(me -> {
+            System.out.println(me.getName());
+            StringBuilder params = new StringBuilder("");
+            Arrays.stream(me.getParameters()).map(p -> p.getType().getName()).forEach(n -> params.append(n + ", "));
+            if (params.length() != 0) {
+                params.delete(params.length() - 2, params.length() - 1);
+            }
+            methodsParamListMap.put(me, params.toString());
+        });
+        return Optional.of(methodsParamListMap);
+    }
+
+    Optional<Map<String, Method>> getMethodNameAndParamStringMethodsMap(final Object o) {
+        Method[] methods = getMethods(o).get();
+        Map<String, Method> methodsParamListMap = new HashMap<>();
+        Arrays.stream(methods).forEach(me -> {
+            System.out.println(me.getName());
+            StringBuilder params = new StringBuilder("");
+            Arrays.stream(me.getParameters()).map(p -> p.getType().getName()).forEach(n -> params.append(n + ", "));
+            if (params.length() != 0) {
+                params.delete(params.length() - 2, params.length() - 1);
+            }
+            methodsParamListMap.put(me.getName() + " " + params.toString(), me);
+        });
+        return Optional.of(methodsParamListMap);
+    }
+
+
     Optional<List<String>> getMethodNamesList(final Object o) {
         return Optional.of(Arrays.asList(MethodsGetter.getMethods(o).get()).stream().map(m -> m.getName()).collect(Collectors.toList()));
     }
@@ -162,12 +205,27 @@ public class ObjectManager {
         return MethodInvoker.PublicMethodInvoke(o, firstMethodFoundByName, args);
     }
 
-    void invokeConstructorWithNoArgsAndSave(Constructor constructor, String valuableName) {
+   Optional<Object> invokeMethodWithArgs(final Object o, final Method method, final Object ... args) {
+        if (Objects.isNull(method)) {
+            return null;
+        }
+        return MethodInvoker.PublicMethodInvoke(o, method, args);
+    }
+
+    Optional<Object> invokeMethodWithNoArgs(final Object o, final Method method) {
+        if (Objects.isNull(method)) {
+            return null;
+        }
+        return MethodInvoker.PublicMethodInvoke(o, method);
+    }
+
+
+    void invokeConstructorWithNoArgsAndSave(Constructor constructor, String valuableName) throws IllegalAccessException, InstantiationException, InvocationTargetException {
         this.objectNames.add(valuableName);
         this.objectStore.put(valuableName, ConstructorInvoker.getNewInstance(constructor));
     }
 
-    void invokeConstructorAndSave(final Constructor constructor, String valuableName, Object ... args) {
+    void invokeConstructorAndSave(final Constructor constructor, String valuableName, Object ... args) throws IllegalAccessException, InstantiationException, InvocationTargetException {
         this.objectNames.add(valuableName);
         this.objectStore.put(valuableName, ConstructorInvoker.getNewInstance(constructor, args));
     }
