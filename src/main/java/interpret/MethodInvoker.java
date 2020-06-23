@@ -16,7 +16,10 @@ public class MethodInvoker {
 
     static Optional<Object> PublicMethodInvoke(Object o, Method m, Object... args) {
         try {
-            Class type = m.getReturnType();
+            if( m.getReturnType().equals(Void.TYPE)) {
+                m.invoke(o, args);
+                return Optional.of(Void.TYPE);
+            }
             return Optional.of(m.invoke(o, args));
         } catch (final InvocationTargetException | IllegalAccessException e) {
             System.out.println(e.getStackTrace());

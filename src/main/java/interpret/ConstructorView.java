@@ -27,7 +27,7 @@ public class ConstructorView extends JDialog implements ActionListener {
         this.jComboBoxMap = new HashMap<>();
         this.valuableListsMap = new HashMap<>();
         this.parametersMap = new HashMap<>();
-        final String[] parameterTypesArray = parameterTypes.split(",");
+        final String[] parameterTypesArray = parameterTypes.split(", ");
         try {
             this.parameterTypeMap = this.objectManager.getParameterTypeMapOfConstructor(objectName, parameterTypesArray).get();
         } catch (final ClassNotFoundException er) {
@@ -41,7 +41,7 @@ public class ConstructorView extends JDialog implements ActionListener {
         }
 
         try {
-            this.constructor = objectManager.getConstructor(objectName, parameterTypes.split(",")).get();
+            this.constructor = objectManager.getConstructor(objectName, parameterTypes.split(", ")).get();
         } catch (final ClassNotFoundException er) {
             ErrorHandleDialogView.showCause(er);
             return;
