@@ -18,4 +18,11 @@ public class ArrayCreator {
             return Optional.empty();
         }
     }
+
+    static Optional<Object> createEmptyArray(final String className, final int length) throws ClassNotFoundException {
+            Class type = Class.forName(className);
+            Object[] array =  (Object[]) (Array.newInstance(type, length));
+            return Optional.of(array);
+    }
 }
+
