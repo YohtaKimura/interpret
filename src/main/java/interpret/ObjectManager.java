@@ -429,4 +429,7 @@ public class ObjectManager {
     List<String> getNames() {
         return objectNames;
     }
+    public void setValue(Map parametersMap, String parameterName, String newValuableName) {
+        parametersMap.put(parameterName, objectStore.get(newValuableName).get());
+    }
 }

@@ -109,7 +109,7 @@ public class OMInvokeMethodView  extends JDialog implements ActionListener {
             final String parameterName = command[1];
             final int index = jComboBoxMap.get(parameterName).getSelectedIndex();
             final String newValuableName = valuableListsMap.get(parameterName).get(index);
-//            objectManager.setValue(o, parameterName, newValuableName);
+            objectManager.setValue(parametersMap, parameterName, newValuableName);
             return;
         }
         if (Objects.equals(command[0], "InputDirectly")) {
