@@ -5,7 +5,6 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Objects;
-import java.util.Optional;
 
 public class ArrayCreatorView extends JFrame implements ActionListener {
     private JTextField sizeOfArrayField;
@@ -36,7 +35,11 @@ public class ArrayCreatorView extends JFrame implements ActionListener {
         final JButton generateButton = new JButton("Generate");
         generateButton.setActionCommand("Generate");
         generateButton.addActionListener(this);
+        final JButton emptyGenerateButton = new JButton("Empty Generate");
+        emptyGenerateButton.setActionCommand("emptyGenerate");
+        emptyGenerateButton.addActionListener(this);
         panel.add(generateButton);
+        panel.add(emptyGenerateButton);
     }
 
     int getArraySize() {
@@ -57,14 +60,27 @@ public class ArrayCreatorView extends JFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        int arraySize = getArraySize();
-        JOptionPane.showMessageDialog(
+        if (Objects.equals(e.getActionCommand(), "Generate")) {
+            int arraySize = getArraySize();
+            JOptionPane.showMessageDialog(
                     null,
                     objectName + " array is what you want");
-        try {
-            objectManager.createArrayAndSave(objectName, valuableName, Integer.valueOf(sizeOfArrayField.getText()));
-        } catch (final ClassNotFoundException er) {
-            ErrorHandleDialogView.showCause(er);
+            try {
+                objectManager.createDefaultArrayAndSave(objectName, valuableName, Integer.valueOf(sizeOfArrayField.getText()));
+            } catch (final ClassNotFoundException er) {
+                ErrorHandleDialogView.showCause(er);
+            }
+        }
+        if (Objects.equals(e.getActionCommand(), "emptyGenerate")) {
+            int arraySize = getArraySize();
+            JOptionPane.showMessageDialog(
+                    null,
+                    objectName + " array is what you want");
+            try {
+                objectManager.createEmptyArrayAndSave(objectName, valuableName, Integer.valueOf(sizeOfArrayField.getText()));
+            } catch (final ClassNotFoundException er) {
+                ErrorHandleDialogView.showCause(er);
+            }
         }
     }
 }

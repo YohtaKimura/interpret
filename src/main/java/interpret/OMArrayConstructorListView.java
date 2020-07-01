@@ -4,16 +4,12 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.PrintStream;
-import java.lang.reflect.Array;
 import java.lang.reflect.Constructor;
-import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
-import java.util.*;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class Test extends JDialog implements ActionListener {
+public class OMArrayConstructorListView extends JDialog implements ActionListener {
     private final String objectName;
     private final String valuableName;
     private final int index;
@@ -21,10 +17,10 @@ public class Test extends JDialog implements ActionListener {
     private List<String> constructorNameList;
     private final ObjectManager objectManager;
 
-    Test(JDialog owner, final ObjectManager objectManager, final String objectName, final String valuableName, final int index) {
+    OMArrayConstructorListView(JDialog owner, final ObjectManager objectManager, final String objectNameAsArray, final String valuableName, final int index) {
         super(owner);
         this.objectManager = objectManager;
-        this.objectName = objectName;
+        this.objectName = objectNameAsArray.substring(2, objectNameAsArray.length() - 1);
         this.valuableName = valuableName;
         this.index = index;
         try {
@@ -62,15 +58,6 @@ public class Test extends JDialog implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        new ConstructorView(this, this.objectManager, this.objectName, this.valuableName, e.getActionCommand());
-    }
-
-    public static void main(String[] args) {
-        Object o = new String[3];
-        Array.set(o, 0, "avc");
-
-        System.out.println(Array.get(o, 0));
-        //new Test(null, new ObjectManager(), "[Ljava.lang.String", "A", 0);
+        new OMArrayConstructorView(this, this.objectManager, this.objectName, this.valuableName, e.getActionCommand(), this.index);
     }
 }
-

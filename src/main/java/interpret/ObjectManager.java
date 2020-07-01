@@ -230,16 +230,27 @@ public class ObjectManager {
         this.objectStore.put(valuableName, ConstructorInvoker.getNewInstance(constructor, args));
     }
 
+    void invokeArrayConstructorAndSave(final Constructor constructor, String valuableName, int index, Object ... args) throws IllegalAccessException, InstantiationException, InvocationTargetException {
+        Object o = this.objectStore.get(valuableName).get();
+        Array.set(o, index, ConstructorInvoker.getNewInstance(constructor, args).get());
+    }
+
     void createOneElementArrayAndSave(final String className, final String valuableName) throws ClassNotFoundException {
         String replacedClassName = className.replace("[]","");
         this.objectNames.add(valuableName);
         this.objectStore.put(valuableName, ArrayCreator.createArray(replacedClassName, 1));
     }
 
-    void createArrayAndSave(final String className, final String valuableName, final int length) throws ClassNotFoundException {
+    void createDefaultArrayAndSave(final String className, final String valuableName, final int length) throws ClassNotFoundException {
         String replacedClassName = className.replace("[]","");
         this.objectNames.add(valuableName);
         this.objectStore.put(valuableName, ArrayCreator.createArray(replacedClassName, length));
+    }
+
+    void createEmptyArrayAndSave(final String className, final String valuableName, final int length) throws ClassNotFoundException {
+        String replacedClassName = className.replace("[]","");
+        this.objectNames.add(valuableName);
+        this.objectStore.put(valuableName, ArrayCreator.createEmptyArray(replacedClassName, length));
     }
 
     Optional<Object> getArrayElement(final Object array, final int index) {
@@ -396,6 +407,9 @@ public class ObjectManager {
     }
 
     private List<Class<?>> getTypes(List<String> parameterTypesAsStringList) {
+        if (parameterTypesAsStringList.contains("")){
+            return Collections.emptyList();
+        }
         List<Class<?>> types = new ArrayList<>();
         for (String parameterTypesAsString : parameterTypesAsStringList) {
             try {
