@@ -93,13 +93,17 @@ public class OMInvokeMethodView  extends JDialog implements ActionListener {
                 parameterList.add(parametersMap.get(parameterName));
             }
             System.out.println("method type: " + this.method);
-
-            Object retVal;
-            if (parameterList.isEmpty()) {
-                retVal = objectManager.invokeMethodWithNoArgs(this.o, this.method).get();
-            } else {
-                retVal = objectManager.invokeMethodWithArgs(this.o, this.method, parameterList.toArray()).get();
+            Object retVal = "";
+            try {
+                if (parameterList.isEmpty()) {
+                    retVal = objectManager.invokeMethodWithNoArgs(this.o, this.method).get();
+                } else {
+                    retVal = objectManager.invokeMethodWithArgs(this.o, this.method, parameterList.toArray()).get();
+                }
+            } catch (Exception er) {
+                ErrorHandleDialogView.showCause(er);
             }
+
             JOptionPane.showMessageDialog(
                     null,
                     "method value: " + retVal.toString());

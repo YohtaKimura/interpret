@@ -149,7 +149,7 @@ public class ObjectManager {
         return Optional.of(Arrays.asList(MethodsGetter.getMethods(o).get()).stream().map(m -> m.getName()).collect(Collectors.toList()));
     }
 
-    Optional<List<String>> getMethodParameterNameList(final Object o, final String name) {
+    Optional<List<String>> getMethodParameterNameList(final Object o, final String name) throws InvocationTargetException, IllegalAccessException {
         return Optional.of(Arrays.asList(getFirstMethodFoundByName(o, name).getParameters()).stream().map(p -> p.getName()).collect(Collectors.toList()));
     }
 
@@ -163,17 +163,13 @@ public class ObjectManager {
         return Optional.of(parameterTypeMapOfMethod);
     }
 
-    void invokeFirstMethod(final Object o) {
-        invokeMethodByName(o, null);
-    }
-
-    void invokeMethodByName(final Object o, final String name) {
+    void invokeMethodByName(final Object o, final String name) throws InvocationTargetException, IllegalAccessException {
         final Method firstMethodFoundByName = getFirstMethodFoundByName(o, name);
         if (firstMethodFoundByName == null) return;
         MethodInvoker.voidAndPublicMethodInvoke(o, firstMethodFoundByName);
     }
 
-    public Method getFirstMethodFoundByName(Object o, String name) {
+    public Method getFirstMethodFoundByName(Object o, String name) throws InvocationTargetException, IllegalAccessException {
         final Method[] methods = MethodsGetter.getMethods(o).get();
         final List<Method> methodsList = Arrays.asList(methods);
         if (Objects.isNull(name)) {
@@ -184,7 +180,7 @@ public class ObjectManager {
         return firstMethodFoundByName;
     }
 
-    void invokeVoidMethodByNameWithArgs(final Object o, final Method name, final Object ... args) {
+    void invokeVoidMethodByNameWithArgs(final Object o, final Method name, final Object ... args) throws InvocationTargetException, IllegalAccessException {
         final Method[] methods = MethodsGetter.getMethods(o).get();
         final List<Method> methodsList = Arrays.asList(methods);
         if (Objects.isNull(name)) {
@@ -195,7 +191,7 @@ public class ObjectManager {
         MethodInvoker.voidAndPublicMethodInvoke(o, firstMethodFoundByName, args);
     }
 
-    Optional<Object> invokeMethodByNameWithArgs(final Object o, final Method name, final Object ... args) {
+    Optional<Object> invokeMethodByNameWithArgs(final Object o, final Method name, final Object ... args) throws InvocationTargetException, IllegalAccessException { //
         final Method[] methods = MethodsGetter.getMethods(o).get();
         final List<Method> methodsList = Arrays.asList(methods);
         if (Objects.isNull(name)) {
@@ -205,14 +201,14 @@ public class ObjectManager {
         return MethodInvoker.PublicMethodInvoke(o, firstMethodFoundByName, args);
     }
 
-   Optional<Object> invokeMethodWithArgs(final Object o, final Method method, final Object ... args) {
+   Optional<Object> invokeMethodWithArgs(final Object o, final Method method, final Object ... args) throws InvocationTargetException, IllegalAccessException {
         if (Objects.isNull(method)) {
             return null;
         }
         return MethodInvoker.PublicMethodInvoke(o, method, args);
     }
 
-    Optional<Object> invokeMethodWithNoArgs(final Object o, final Method method) {
+    Optional<Object> invokeMethodWithNoArgs(final Object o, final Method method) throws InvocationTargetException, IllegalAccessException {
         if (Objects.isNull(method)) {
             return null;
         }
@@ -222,7 +218,6 @@ public class ObjectManager {
 
     void invokeConstructorWithNoArgsAndSave(Constructor constructor, String valuableName) throws IllegalAccessException, InstantiationException, InvocationTargetException {
         this.objectNames.add(valuableName);
-        this.objectStore.put(valuableName, ConstructorInvoker.getNewInstance(constructor));
     }
 
     void invokeConstructorAndSave(final Constructor constructor, String valuableName, Object ... args) throws IllegalAccessException, InstantiationException, InvocationTargetException {
